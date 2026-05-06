@@ -403,7 +403,6 @@
 
         <div class="bb-nav-links">
             <a href="{{ url('/') }}"           class="bb-nav-link @if(request()->is('/'))          active @endif">Home</a>
-            <a href="https://demo.bankbird.app/" target="_blank" class="bb-nav-link @if(request()->is('demo')) active @endif">Demo</a>
             <a href="{{ url('/install') }}"     class="bb-nav-link @if(request()->is('install'))    active @endif">Installatie</a>
             <a href="{{ url('/kennisbank') }}"  class="bb-nav-link @if(request()->is('kennisbank')) active @endif">Kennisbank</a>
             <a href="{{ url('/docs') }}"        class="bb-nav-link @if(request()->is('docs'))       active @endif">Docs</a>
@@ -445,7 +444,6 @@
         </div>
         <nav class="bb-mobile-nav">
             <a href="{{ url('/') }}"           class="@if(request()->is('/'))          active @endif">🏠 Home <span>→</span></a>
-            <a href="https://demo.bankbird.app/" target="_blank">🐦 Demo <span>↗</span></a>
             <a href="{{ url('/install') }}"     class="@if(request()->is('install'))    active @endif">🚀 Installatie <span>→</span></a>
             <a href="{{ url('/kennisbank') }}"  class="@if(request()->is('kennisbank')) active @endif">📖 Kennisbank <span>→</span></a>
             <a href="{{ url('/docs') }}"        class="@if(request()->is('docs'))       active @endif">📚 Documentatie <span>→</span></a>
@@ -497,6 +495,31 @@
     </div>
 </footer>
 
+{{-- Beta announcement bar --}}
+<div id="betaBar" style="
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: linear-gradient(90deg, #FF8A3D 0%, #FF6B1A 100%);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    font-size: 0.8125rem; font-weight: 500;
+    box-shadow: 0 -2px 20px rgba(255,138,61,0.4);
+">
+    <span style="display:flex;align-items:center;gap:0.5rem;">
+        <span style="background:rgba(255,255,255,0.25);font-size:0.6875rem;font-weight:800;padding:0.15rem 0.5rem;border-radius:99px;text-transform:uppercase;letter-spacing:0.06em;">Beta</span>
+        BankBird v1.0 is gelanceerd op 6 mei 2026 — de app kan nog instabiel zijn. Bugs melden via
+        <a href="https://github.com/AivionStudiosPlayground/bankbird/issues" target="_blank" rel="noopener"
+           style="color:white;font-weight:700;text-decoration:underline;text-underline-offset:2px;">GitHub Issues</a>.
+    </span>
+    <button onclick="closeBetaBar()" aria-label="Melding sluiten" style="
+        background: rgba(255,255,255,0.2); border: none; cursor: pointer;
+        color: white; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.875rem; line-height: 1; flex-shrink: 0;
+        transition: background 0.15s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">✕</button>
+</div>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -514,6 +537,18 @@
 </script>
 
 <script>
+    // Beta bar
+    (function() {
+        if (localStorage.getItem('betaBarDismissed') === '1') {
+            var bar = document.getElementById('betaBar');
+            if (bar) bar.style.display = 'none';
+        }
+    })();
+    function closeBetaBar() {
+        localStorage.setItem('betaBarDismissed', '1');
+        document.getElementById('betaBar').style.display = 'none';
+    }
+
     // Scroll-reveal
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
