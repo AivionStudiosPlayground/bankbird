@@ -43,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
 
     private function resolveLogoHeight(): string
     {
-        return rescue(fn () => AppSetting::current()->logo_height, '2rem', false) ?? '2rem';
+        return rescue(fn () => AppSetting::current()->logo_height, '3rem', false) ?? '3rem';
     }
 
     private function resolveFavicon(): ?string
@@ -54,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
             return Storage::disk('public')->url($faviconPath);
         }
 
-        return null;
+        return asset('images/Favicon.png');
     }
 
     public function panel(Panel $panel): Panel
@@ -97,17 +97,7 @@ class AdminPanelProvider extends PanelProvider
             )
             ->renderHook(
                 PanelsRenderHook::BODY_START,
-                function (): string {
-                    if (! config('app.demo_mode', false)) {
-                        return '';
-                    }
-
-                    return <<<'HTML'
-                    <div class="w-full bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
-                        Demo-modus — alle wijzigingen zijn uitgeschakeld. Dit is een live voorbeeld van BankBird.
-                    </div>
-                    HTML;
-                },
+                fn () => view('partials.demo-banner'),
             )
             ->renderHook(
                 PanelsRenderHook::BODY_END,
