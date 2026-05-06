@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsInDemoMode;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
 use Filament\Forms\Components\ColorPicker;
@@ -16,6 +17,8 @@ use Filament\Tables\Table;
 
 class CategoryResource extends Resource
 {
+    use RestrictsInDemoMode;
+
     protected static ?string $model = Category::class;
 
     public static function getNavigationIcon(): string
@@ -67,20 +70,20 @@ class CategoryResource extends Resource
             Select::make('icon')
                 ->label('Icoon')
                 ->options([
-                    'shopping-cart'        => 'Winkelwagen',
-                    'fire'                 => 'Vuur',
-                    'truck'                => 'Vrachtwagen',
-                    'home'                 => 'Huis',
-                    'device-phone-mobile'  => 'Telefoon',
-                    'scissors'             => 'Schaar',
-                    'heart'                => 'Hart',
-                    'musical-note'         => 'Muziek',
-                    'arrow-trending-up'    => 'Groei',
-                    'archive-box'          => 'Archief',
-                    'ellipsis-horizontal'  => 'Overig',
-                    'tag'                  => 'Label',
-                    'banknotes'            => 'Bankbiljetten',
-                    'building-storefront'  => 'Winkel',
+                    'shopping-cart' => 'Winkelwagen',
+                    'fire' => 'Vuur',
+                    'truck' => 'Vrachtwagen',
+                    'home' => 'Huis',
+                    'device-phone-mobile' => 'Telefoon',
+                    'scissors' => 'Schaar',
+                    'heart' => 'Hart',
+                    'musical-note' => 'Muziek',
+                    'arrow-trending-up' => 'Groei',
+                    'archive-box' => 'Archief',
+                    'ellipsis-horizontal' => 'Overig',
+                    'tag' => 'Label',
+                    'banknotes' => 'Bankbiljetten',
+                    'building-storefront' => 'Winkel',
                 ])
                 ->default('tag'),
 
@@ -99,7 +102,7 @@ class CategoryResource extends Resource
 
                 IconColumn::make('icon')
                     ->label('Icoon')
-                    ->icon(fn (Category $record): string => 'heroicon-o-' . ($record->icon ?: 'tag')),
+                    ->icon(fn (Category $record): string => 'heroicon-o-'.($record->icon ?: 'tag')),
 
                 TextColumn::make('name')
                     ->label('Naam')
@@ -125,10 +128,10 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCategories::route('/'),
+            'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
-            'view'   => Pages\ViewCategory::route('/{record}'),
-            'edit'   => Pages\EditCategory::route('/{record}/edit'),
+            'view' => Pages\ViewCategory::route('/{record}'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }

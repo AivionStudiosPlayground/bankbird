@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\AccountType;
+use App\Filament\Concerns\RestrictsInDemoMode;
 use App\Filament\Resources\AccountResource\Pages;
 use App\Models\Account;
 use Filament\Forms\Components\ColorPicker;
@@ -18,6 +19,8 @@ use Filament\Tables\Table;
 
 class AccountResource extends Resource
 {
+    use RestrictsInDemoMode;
+
     protected static ?string $model = Account::class;
 
     public static function getNavigationIcon(): string
@@ -69,13 +72,13 @@ class AccountResource extends Resource
             Select::make('icon')
                 ->label('Icoon')
                 ->options([
-                    'banknotes'         => 'Bankbiljetten',
-                    'credit-card'       => 'Creditcard',
-                    'building-library'  => 'Bank',
-                    'wallet'            => 'Portemonnee',
-                    'currency-euro'     => 'Euro',
+                    'banknotes' => 'Bankbiljetten',
+                    'credit-card' => 'Creditcard',
+                    'building-library' => 'Bank',
+                    'wallet' => 'Portemonnee',
+                    'currency-euro' => 'Euro',
                     'arrow-trending-up' => 'Groei',
-                    'home'              => 'Huis',
+                    'home' => 'Huis',
                 ])
                 ->default('banknotes'),
 
@@ -126,9 +129,9 @@ class AccountResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAccounts::route('/'),
+            'index' => Pages\ListAccounts::route('/'),
             'create' => Pages\CreateAccount::route('/create'),
-            'edit'   => Pages\EditAccount::route('/{record}/edit'),
+            'edit' => Pages\EditAccount::route('/{record}/edit'),
         ];
     }
 }

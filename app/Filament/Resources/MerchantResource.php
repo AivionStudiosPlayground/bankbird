@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsInDemoMode;
 use App\Filament\Resources\MerchantResource\Pages;
 use App\Models\Merchant;
 use App\Services\MerchantPatternService;
@@ -18,6 +19,8 @@ use Filament\Tables\Table;
 
 class MerchantResource extends Resource
 {
+    use RestrictsInDemoMode;
+
     protected static ?string $model = Merchant::class;
 
     public static function getNavigationIcon(): string
@@ -144,7 +147,7 @@ class MerchantResource extends Resource
     {
         return [
             'index' => Pages\ListMerchants::route('/'),
-            'edit'  => Pages\EditMerchant::route('/{record}/edit'),
+            'edit' => Pages\EditMerchant::route('/{record}/edit'),
         ];
     }
 }

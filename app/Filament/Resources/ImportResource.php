@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsInDemoMode;
 use App\Filament\Resources\ImportResource\Pages;
 use App\Models\Import;
 use Filament\Resources\Resource;
@@ -11,6 +12,8 @@ use Filament\Tables\Table;
 
 class ImportResource extends Resource
 {
+    use RestrictsInDemoMode;
+
     protected static ?string $model = Import::class;
 
     public static function getNavigationIcon(): string
@@ -85,9 +88,9 @@ class ImportResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListImports::route('/'),
+            'index' => Pages\ListImports::route('/'),
             'create' => Pages\CreateImport::route('/create'),
-            'view'   => Pages\ViewImport::route('/{record}'),
+            'view' => Pages\ViewImport::route('/{record}'),
         ];
     }
 }

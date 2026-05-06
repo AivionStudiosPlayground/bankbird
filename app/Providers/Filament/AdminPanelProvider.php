@@ -6,6 +6,7 @@ use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\BackupPage;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\ManageSettings;
+use App\Http\Middleware\DemoMode;
 use App\Models\AppSetting;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
@@ -95,6 +96,20 @@ class AdminPanelProvider extends PanelProvider
                 fn () => view('partials.sidebar-footer'),
             )
             ->renderHook(
+                PanelsRenderHook::BODY_START,
+                function (): string {
+                    if (! config('app.demo_mode', false)) {
+                        return '';
+                    }
+
+                    return <<<'HTML'
+                    <div class="w-full bg-amber-400 text-amber-900 text-center text-sm font-medium py-2 px-4">
+                        Demo-modus — alle wijzigingen zijn uitgeschakeld. Dit is een live voorbeeld van BankBird.
+                    </div>
+                    HTML;
+                },
+            )
+            ->renderHook(
                 PanelsRenderHook::BODY_END,
                 function (): string {
                     return <<<'HTML'
@@ -164,6 +179,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                DemoMode::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

@@ -3,19 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Enums\TransactionType;
+use App\Filament\Concerns\RestrictsInDemoMode;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Services\AiCategorizationService;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Actions\BulkAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TransactionResource extends Resource
 {
+    use RestrictsInDemoMode;
+
     protected static ?string $model = Transaction::class;
 
     public static function getNavigationIcon(): string
@@ -237,7 +240,7 @@ class TransactionResource extends Resource
                                     ], ';');
                                 }
                                 fclose($handle);
-                            }, 'transacties-' . now()->format('Y-m-d') . '.csv', [
+                            }, 'transacties-'.now()->format('Y-m-d').'.csv', [
                                 'Content-Type' => 'text/csv; charset=UTF-8',
                             ]);
                         }),
@@ -253,7 +256,7 @@ class TransactionResource extends Resource
     {
         return [
             'index' => Pages\ListTransactions::route('/'),
-            'edit'  => Pages\EditTransaction::route('/{record}/edit'),
+            'edit' => Pages\EditTransaction::route('/{record}/edit'),
         ];
     }
 }

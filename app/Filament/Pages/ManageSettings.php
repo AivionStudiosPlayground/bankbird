@@ -65,11 +65,11 @@ class ManageSettings extends Page
                             ->label('Logo grootte (in de navigatiebalk)')
                             ->options([
                                 '1.5rem' => 'Klein (1.5rem)',
-                                '2rem'   => 'Normaal (2rem) — standaard',
+                                '2rem' => 'Normaal (2rem) — standaard',
                                 '2.5rem' => 'Middel (2.5rem)',
-                                '3rem'   => 'Groot (3rem)',
-                                '4rem'   => 'Extra groot (4rem)',
-                                '5rem'   => 'Maximaal (5rem)',
+                                '3rem' => 'Groot (3rem)',
+                                '4rem' => 'Extra groot (4rem)',
+                                '5rem' => 'Maximaal (5rem)',
                             ])
                             ->default('2rem')
                             ->selectablePlaceholder(false),
@@ -95,11 +95,11 @@ class ManageSettings extends Page
                             ->label('')
                             ->content(new HtmlString(
                                 '<div style="padding: 0.75rem 1rem; border-radius: 0.5rem; background: #fefce8; border: 1px solid #fde047; color: #713f12; font-size: 0.875rem; line-height: 1.5;">'
-                                . '<strong>⚠️ Let op — privacy</strong><br>'
-                                . 'Wanneer u AI-categorisatie inschakelt, worden uw transactieomschrijvingen en -bedragen verstuurd naar de servers van <strong>Anthropic (Claude)</strong> of <strong>OpenAI</strong>. '
-                                . 'Uw financiële gegevens zijn zichtbaar voor deze externe partijen en worden verwerkt conform hun privacybeleid. '
-                                . 'Schakel dit alleen in als u hiermee akkoord gaat.'
-                                . '</div>'
+                                .'<strong>⚠️ Let op — privacy</strong><br>'
+                                .'Wanneer u AI-categorisatie inschakelt, worden uw transactieomschrijvingen en -bedragen verstuurd naar de servers van <strong>Anthropic (Claude)</strong> of <strong>OpenAI</strong>. '
+                                .'Uw financiële gegevens zijn zichtbaar voor deze externe partijen en worden verwerkt conform hun privacybeleid. '
+                                .'Schakel dit alleen in als u hiermee akkoord gaat.'
+                                .'</div>'
                             ))
                             ->columnSpanFull(),
 
@@ -152,6 +152,16 @@ class ManageSettings extends Page
 
     public function save(): void
     {
+        if (config('app.demo_mode', false)) {
+            Notification::make()
+                ->warning()
+                ->title('Demo-modus')
+                ->body('Wijzigingen zijn uitgeschakeld in de demo-omgeving.')
+                ->send();
+
+            return;
+        }
+
         $data = $this->form->getState();
 
         $setting = AppSetting::current();
