@@ -403,7 +403,7 @@
 
         <div class="bb-nav-links">
             <a href="{{ url('/') }}"           class="bb-nav-link @if(request()->is('/'))          active @endif">Home</a>
-            <a href="https://demo.bankbird.app/" target="_blank" class="bb-nav-link @if(request()->is('demo')) active @endif">Demo</a>
+            <a href="https://demo.bankbird.app/admin" target="_blank" class="bb-nav-link @if(request()->is('demo')) active @endif">Demo</a>
             <a href="{{ url('/install') }}"     class="bb-nav-link @if(request()->is('install'))    active @endif">Installatie</a>
             <a href="{{ url('/kennisbank') }}"  class="bb-nav-link @if(request()->is('kennisbank')) active @endif">Kennisbank</a>
             <a href="{{ url('/docs') }}"        class="bb-nav-link @if(request()->is('docs'))       active @endif">Docs</a>
@@ -420,8 +420,9 @@
         </div>
 
         <div style="display:flex;align-items:center;gap:0.75rem;">
-            <a href="https://demo.bankbird.app/" target="_blank" class="bb-btn bb-btn-sm" style="background:white;color:#1565C0;border:2px solid rgba(30,136,229,0.35);box-shadow:0 2px 8px rgba(30,136,229,0.1);">
+            <a href="https://demo.bankbird.app/admin" target="_blank" class="bb-btn bb-btn-sm">
                 🐦 Demo
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
             </a>
             <a href="{{ url('/install') }}" class="bb-btn bb-btn-sm">
                 Aan de slag
@@ -444,7 +445,7 @@
         </div>
         <nav class="bb-mobile-nav">
             <a href="{{ url('/') }}"           class="@if(request()->is('/'))          active @endif">🏠 Home <span>→</span></a>
-            <a href="https://demo.bankbird.app/" target="_blank">🐦 Demo <span>↗</span></a>
+            <a href="https://demo.bankbird.app/admin" target="_blank">🐦 Demo <span>↗</span></a>
             <a href="{{ url('/install') }}"     class="@if(request()->is('install'))    active @endif">🚀 Installatie <span>→</span></a>
             <a href="{{ url('/kennisbank') }}"  class="@if(request()->is('kennisbank')) active @endif">📖 Kennisbank <span>→</span></a>
             <a href="{{ url('/docs') }}"        class="@if(request()->is('docs'))       active @endif">📚 Documentatie <span>→</span></a>
