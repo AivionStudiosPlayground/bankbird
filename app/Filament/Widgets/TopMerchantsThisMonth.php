@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Widgets\Concerns\HasActiveMonth;
+use App\Models\Merchant;
 use App\Models\Transaction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -19,40 +20,44 @@ class TopMerchantsThisMonth extends BaseWidget
 
     public function getHeading(): string
     {
-        return 'Top merchants — ' . $this->activeMonth()->locale('nl')->translatedFormat('F Y');
+        return 'Top merchants — '.$this->activeMonth()->locale('nl')->translatedFormat('F Y');
     }
 
     public function table(Table $table): Table
     {
         $month = $this->activeMonth();
         $start = $month->copy()->startOfMonth();
-        $end   = $month->copy()->endOfMonth();
+        $end = $month->copy()->endOfMonth();
+
+        $stats = Transaction::query()
+            ->selectRaw('merchant_id, SUM(amount) as total_amount, COUNT(*) as tx_count')
+            ->where('type', 'debit')
+            ->whereBetween('date', [$start, $end])
+            ->whereNotNull('merchant_id')
+            ->whereHas('category', fn ($q) => $q->where('name', '!=', 'Sparen'))
+            ->groupBy('merchant_id');
 
         return $table
             ->query(
-                Transaction::query()
-                    ->selectRaw('MIN(id) as id, merchant_id, SUM(amount) as total_amount, COUNT(*) as tx_count')
-                    ->where('type', 'debit')
-                    ->whereBetween('date', [$start, $end])
-                    ->whereNotNull('merchant_id')
-                    ->whereHas('category', fn ($q) => $q->where('name', '!=', 'Sparen'))
-                    ->groupBy('merchant_id')
-                    ->orderByDesc('total_amount')
+                Merchant::query()
+                    ->joinSub($stats, 'merchant_stats', fn ($join) => $join->on('merchants.id', '=', 'merchant_stats.merchant_id'))
+                    ->select('merchants.*', 'merchant_stats.total_amount', 'merchant_stats.tx_count')
+                    ->orderByDesc('merchant_stats.total_amount')
                     ->limit(10)
             )
             ->columns([
-                ImageColumn::make('merchant.logo_url')
+                ImageColumn::make('logo_url')
                     ->label('')
                     ->imageHeight(24)
                     ->square()
                     ->extraImgAttributes(['class' => 'object-contain'])
                     ->grow(false),
 
-                TextColumn::make('merchant.name')
+                TextColumn::make('name')
                     ->label('Merchant')
                     ->weight('semibold'),
 
-                TextColumn::make('merchant.category.name')
+                TextColumn::make('category.name')
                     ->label('Categorie')
                     ->badge()
                     ->placeholder('—'),
