@@ -54,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
             return Storage::disk('public')->url($faviconPath);
         }
 
-        return asset('images/Favicon.png');
+        return asset('images/bird.png');
     }
 
     public function panel(Panel $panel): Panel
