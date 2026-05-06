@@ -103,7 +103,7 @@ BankBird is een open-source persoonlijke financiële administratie app (Laravel 
 Jouw taak: begeleid mij stap voor stap door de installatie op mijn computer.
 Ga ervan uit dat ik weinig technische kennis heb. Wees geduldig en bemoedigend.
 
-Repo: https://github.com/jouw-username/bankbird
+Repo: https://github.com/AivionStudiosPlayground/bankbird
 
 WAT BANKBIRD DOET:
 - Bankafschriften importeren (ING PDF en CSV — Rabobank & ABN AMRO volgen binnenkort)
@@ -145,7 +145,7 @@ BankBird is een open-source persoonlijke financiële administratie app (Laravel 
 Jouw taak: begeleid mij stap voor stap door de installatie op mijn computer.
 Ga ervan uit dat ik weinig technische kennis heb. Wees geduldig en bemoedigend.
 
-Repo: https://github.com/jouw-username/bankbird
+Repo: https://github.com/AivionStudiosPlayground/bankbird
 
 WAT BANKBIRD DOET:
 - Bankafschriften importeren (ING PDF en CSV — Rabobank & ABN AMRO volgen binnenkort)
@@ -277,7 +277,7 @@ function copyPrompt(target) {
                         <span style="margin-left:auto;font-size:0.6875rem;color:rgba(255,255,255,0.3);font-family:monospace;">bash</span>
                     </div>
                     <pre><span class="tok-c"># Clone de repository</span>
-<span class="tok-k">git</span> clone https://github.com/jouw-username/bankbird.git
+<span class="tok-k">git</span> clone https://github.com/AivionStudiosPlayground/bankbird.git
 <span class="tok-k">cd</span> bankbird
 
 <span class="tok-c"># Installeer PHP dependencies</span>

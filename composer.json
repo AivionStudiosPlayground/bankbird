@@ -3,7 +3,7 @@
     "type": "project",
     "description": "BankBird — persoonlijke financiële administratie voor ING bankafschriften.",
     "keywords": ["bankbird", "laravel", "finance"],
-    "license": "MIT",
+    "license": "AGPL-3.0-only",
     "require": {
         "php": "^8.2",
         "filament/filament": "^5.6",

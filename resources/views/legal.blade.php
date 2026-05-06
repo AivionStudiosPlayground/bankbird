@@ -354,7 +354,7 @@
                                 <span style="font-size:1.375rem;">💻</span>
                                 <div>
                                     <div style="font-size:0.75rem;color:#6B7A99;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">GitHub</div>
-                                    <a href="https://github.com" target="_blank" style="font-size:0.9375rem;font-weight:700;color:#1E88E5;text-decoration:none;">github.com/avionstudios/bankbird</a>
+                                    <a href="https://github.com/AivionStudiosPlayground/bankbird" target="_blank" style="font-size:0.9375rem;font-weight:700;color:#1E88E5;text-decoration:none;">github.com/AivionStudiosPlayground/bankbird</a>
                                 </div>
                             </div>
                         </div>
