@@ -19,11 +19,7 @@
         "
     >
         {{-- Bird icon --}}
-        <img
-            src="{{ asset('images/bird.png') }}"
-            alt=""
-            style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:0.9;flex-shrink:0;"
-        >
+        <span style="font-size:1.25rem;line-height:1;flex-shrink:0;" aria-hidden="true">🐦</span>
 
         {{-- Message --}}
         <span style="color:rgba(255,255,255,0.92);font-size:0.8125rem;font-weight:500;line-height:1.4;">

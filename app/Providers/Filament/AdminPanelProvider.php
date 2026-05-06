@@ -43,7 +43,7 @@ class AdminPanelProvider extends PanelProvider
 
     private function resolveLogoHeight(): string
     {
-        return rescue(fn () => AppSetting::current()->logo_height, '3rem', false) ?? '3rem';
+        return rescue(fn () => AppSetting::current()->logo_height, '4rem', false) ?? '4rem';
     }
 
     private function resolveFavicon(): ?string

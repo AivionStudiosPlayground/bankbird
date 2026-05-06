@@ -65,13 +65,13 @@ class ManageSettings extends Page
                             ->label('Logo grootte (in de navigatiebalk)')
                             ->options([
                                 '1.5rem' => 'Klein (1.5rem)',
-                                '2rem' => 'Normaal (2rem) — standaard',
+                                '2rem' => 'Normaal (2rem)',
                                 '2.5rem' => 'Middel (2.5rem)',
                                 '3rem' => 'Groot (3rem)',
-                                '4rem' => 'Extra groot (4rem)',
+                                '4rem' => 'Extra groot (4rem) — standaard',
                                 '5rem' => 'Maximaal (5rem)',
                             ])
-                            ->default('2rem')
+                            ->default('4rem')
                             ->selectablePlaceholder(false),
 
                         FileUpload::make('favicon_path')

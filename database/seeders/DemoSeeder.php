@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\AccountType;
 use App\Enums\TransactionType;
 use App\Models\Account;
+use App\Models\AppSetting;
 use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -62,6 +63,8 @@ class DemoSeeder extends Seeder
 
         Account::recalculateBalance($betaal->id);
         Account::recalculateBalance($spaar->id);
+
+        AppSetting::current()->update(['logo_height' => '4rem']);
     }
 
     /** @return array<string, Merchant> */

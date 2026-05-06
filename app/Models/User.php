@@ -14,9 +14,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar, HasAppAuthentication, HasAppAuthenticationRecovery
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasAvatar
 {
-    use HasFactory, Notifiable, InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery;
+    use HasFactory, InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery, Notifiable;
 
     public function canAccessPanel(Panel $panel): bool
     {
@@ -25,9 +25,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasAppAut
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->avatar_url
-            ? Storage::disk('public')->url($this->avatar_url)
-            : null;
+        if ($this->avatar_url) {
+            return Storage::disk('public')->url($this->avatar_url);
+        }
+
+        return asset('images/bird.png');
     }
 
     /**
