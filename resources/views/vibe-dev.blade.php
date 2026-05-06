@@ -488,7 +488,7 @@ $account = <span class="tok-fn">Account</span>::find(1);
                                 <a href="{{ url('/docs') }}" style="display:inline-flex;align-items:center;gap:0.5rem;background:white;color:#5B21B6;border-radius:0.875rem;font-weight:700;font-size:0.9375rem;padding:0.65rem 1.375rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
                                     📚 Documentatie →
                                 </a>
-                                <a href="https://github.com" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);color:white;border:2px solid rgba(255,255,255,0.3);border-radius:0.875rem;font-weight:600;font-size:0.9375rem;padding:0.625rem 1.375rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
+                                <a href="https://github.com/AivionStudiosPlayground/bankbird" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);color:white;border:2px solid rgba(255,255,255,0.3);border-radius:0.875rem;font-weight:600;font-size:0.9375rem;padding:0.625rem 1.375rem;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
                                     GitHub ↗
                                 </a>
                             </div>

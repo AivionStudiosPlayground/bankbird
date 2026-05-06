@@ -23,7 +23,7 @@ De eenvoudigste manier om BankBird te installeren is door Claude te vragen het v
 
 **Stap 1** — Clone de repository:
 ```bash
-git clone https://github.com/jouw-gebruikersnaam/bankbird.git
+git clone https://github.com/AivionStudiosPlayground/bankbird.git
 cd bankbird
 ```
 
