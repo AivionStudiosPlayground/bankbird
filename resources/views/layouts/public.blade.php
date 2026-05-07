@@ -587,6 +587,7 @@
 </div>
 
 <script type="application/ld+json">
+@verbatim
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -596,6 +597,7 @@
   "operatingSystem": "Web",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Organization", "name": "Avion Studios", "email": "mail@avionstudios.nl" },
+@endverbatim
   "url": "{{ url('/') }}",
   "license": "https://www.gnu.org/licenses/agpl-3.0.html",
   "inLanguage": "nl"
