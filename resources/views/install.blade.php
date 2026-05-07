@@ -405,4 +405,30 @@ function copyPrompt() {
     </div>
 </section>
 
+{{-- ══════════════════════════════════════════════ --}}
+{{-- WAT NU? — funnel naar volgende stappen        --}}
+{{-- ══════════════════════════════════════════════ --}}
+<section style="background:#F0F6FF;padding:1rem 1.5rem 4rem;">
+    <div class="bb-wrap">
+        <div style="text-align:center;margin-bottom:2rem;">
+            <h2 style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:900;margin:0 0 0.5rem;color:#0B1F3A;letter-spacing:-0.02em;">Wat nu?</h2>
+            <p style="font-size:0.9375rem;color:#6B7A99;margin:0;">Drie handige plekken om verder te kijken</p>
+        </div>
+        <div class="bb-grid-3" style="gap:1rem;">
+            @foreach([
+                ['/demo', '🐦', 'Bekijk de demo', 'Eerst zien hoe BankBird werkt voordat je installeert? Open de live demo met voorbeelddata.'],
+                ['/faq', '❓', 'Lees de FAQ', 'Antwoorden op vragen over open source, je data, AI-categorisatie en wat je met BankBird mag doen.'],
+                ['/docs', '📚', 'Naar de docs', 'Diepere technische documentatie voor wie zelf wil sleutelen of integreren.'],
+            ] as [$href, $icon, $title, $desc])
+            <a href="{{ url($href) }}" class="bb-card" style="padding:1.5rem;text-decoration:none;display:flex;flex-direction:column;gap:0.625rem;">
+                <span style="font-size:1.75rem;">{{ $icon }}</span>
+                <div style="font-size:1rem;font-weight:800;color:#0B1F3A;">{{ $title }}</div>
+                <div style="font-size:0.875rem;color:#6B7A99;line-height:1.55;flex:1;">{{ $desc }}</div>
+                <div style="font-size:0.8125rem;font-weight:700;color:#1E88E5;margin-top:0.25rem;">Bekijk →</div>
+            </a>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 @endsection

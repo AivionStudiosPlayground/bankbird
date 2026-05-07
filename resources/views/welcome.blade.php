@@ -26,7 +26,7 @@
             <div style="animation: fadeInUp 0.7s ease both;">
                 <div style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:99px;padding:0.3rem 1rem 0.3rem 0.5rem;margin-bottom:1.75rem;">
                     <span style="background:white;color:#1E88E5;border-radius:99px;font-size:0.6875rem;font-weight:800;padding:0.15rem 0.625rem;text-transform:uppercase;letter-spacing:0.08em;">Nieuw</span>
-                    <span style="font-size:0.8125rem;color:rgba(255,255,255,0.9);font-weight:500;">AI-categorisatie met Claude & GPT</span>
+                    <span style="font-size:0.8125rem;color:rgba(255,255,255,0.9);font-weight:500;">AI installeert BankBird voor je</span>
                 </div>
 
                 <h1 style="font-size:clamp(2.5rem,5vw,3.75rem);font-weight:900;color:white;line-height:1.1;margin:0 0 1.25rem;letter-spacing:-0.02em;">
@@ -34,13 +34,13 @@
                     <span style="color:#FFE082;">zonder gedoe</span> 🐦
                 </h1>
 
-                <p style="font-size:1.1875rem;color:rgba(255,255,255,0.82);line-height:1.65;margin:0 0 2.25rem;max-width:480px;">
-                    BankBird is jouw persoonlijke financiële assistent. Importeer bankafschriften, laat AI categoriseren en krijg helder inzicht in je geld — gratis en open-source.
+                <p style="font-size:1.1875rem;color:rgba(255,255,255,0.82);line-height:1.65;margin:0 0 2.25rem;max-width:520px;">
+                    Vraag Claude of Codex om BankBird te installeren en je hebt binnen vijf minuten een persoonlijke financiële assistent — die je bankafschriften importeert, AI je transacties laat categoriseren en je weer helder inzicht geeft. Gratis, open-source.
                 </p>
 
                 <div class="bb-flex-center" style="display:flex;flex-wrap:wrap;gap:0.875rem;margin-bottom:3rem;">
                     <a href="{{ url('/install') }}" style="display:inline-flex;align-items:center;gap:0.5rem;background:white;color:#1565C0;border-radius:0.875rem;font-weight:800;font-size:1.0625rem;padding:0.875rem 2rem;text-decoration:none;box-shadow:0 8px 32px rgba(0,0,0,0.2);transition:transform 0.18s,box-shadow 0.18s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 32px rgba(0,0,0,0.2)'">
-                        🚀 Zelf installeren
+                        🤖 Laat AI installeren
                     </a>
                     <a href="{{ url('/demo') }}" class="bb-btn-ghost-white bb-btn-lg">
                         Bekijk de demo →
@@ -48,7 +48,7 @@
                 </div>
 
                 <div style="display:flex;flex-wrap:wrap;gap:1.5rem;">
-                    @foreach(['✓ 100% gratis & open-source', '✓ Jouw data, jouw server', '✓ AI-categorisatie'] as $item)
+                    @foreach(['✓ 100% gratis & open-source', '✓ Jouw data, jouw server', '✓ Eén prompt, vijf minuten'] as $item)
                         <span style="font-size:0.875rem;color:rgba(255,255,255,0.75);font-weight:500;">{{ $item }}</span>
                     @endforeach
                 </div>
@@ -96,6 +96,67 @@
                 <div style="font-size:0.8125rem;color:#6B7A99;font-weight:500;margin-top:0.25rem;">{{ $label }}</div>
             </div>
             @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ══════════════════════════════════════════════ --}}
+{{-- DE INSTALLATIE VAN 2026                       --}}
+{{-- ══════════════════════════════════════════════ --}}
+<section class="bb-section" style="background:white;">
+    <div class="bb-wrap">
+        <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+            <div class="bb-pill" style="margin-bottom:1rem;">🤖 De installatie van 2026</div>
+            <h2 style="font-size:clamp(1.875rem,3.5vw,2.75rem);font-weight:900;margin:0 0 1rem;letter-spacing:-0.02em;">
+                Vergeet diskettes,<br><span class="bb-gradient-text">vraag de AI</span>
+            </h2>
+            <p style="font-size:1.0625rem;color:#6B7A99;max-width:620px;margin:0 auto;line-height:1.65;">
+                We kennen de tijd van diskettes, downloads en lange installers. Maar we leven in 2026 — en AI doet dit gewoon voor je. BankBird is volledig te installeren via Claude of Codex.
+            </p>
+        </div>
+
+        <div class="bb-grid-2 reveal" style="gap:1.5rem;align-items:stretch;">
+            {{-- Vroeger --}}
+            <div style="background:#F5F5F5;border:1px solid #E0E0E0;border-radius:1.5rem;padding:2rem;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:1rem;right:1rem;background:#9E9E9E;color:white;border-radius:99px;font-size:0.6875rem;font-weight:800;padding:0.25rem 0.75rem;text-transform:uppercase;letter-spacing:0.06em;">Vroeger</div>
+                <div style="font-size:2.25rem;margin-bottom:1rem;filter:grayscale(0.4);">💾📀</div>
+                <h3 style="font-size:1.25rem;font-weight:800;margin:0 0 1rem;color:#424242;line-height:1.3;">Diskettes, downloads, installers</h3>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.625rem;">
+                    @foreach([
+                        '📦 Software op een schijfje of zip-bestand',
+                        '⬇️ Downloaden, uitpakken, kijken wat je krijgt',
+                        '⚙️ Setup-wizard met 14 schermen "Volgende"',
+                        '💻 Terminal-commando\'s die je niet snapt',
+                        '🐛 Foutmeldingen googlen en stackoverflow afstropen',
+                    ] as $item)
+                    <li style="font-size:0.9375rem;color:#616161;line-height:1.5;">{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- Nu --}}
+            <div style="background:linear-gradient(135deg,#0D47A1,#1565C0,#1E88E5);border-radius:1.5rem;padding:2rem;position:relative;overflow:hidden;color:white;box-shadow:0 12px 40px rgba(30,136,229,0.25);">
+                <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,0.06);border-radius:50%;pointer-events:none;"></div>
+                <div style="position:absolute;top:1rem;right:1rem;background:white;color:#1565C0;border-radius:99px;font-size:0.6875rem;font-weight:800;padding:0.25rem 0.75rem;text-transform:uppercase;letter-spacing:0.06em;z-index:1;">Nu — 2026</div>
+                <div style="font-size:2.25rem;margin-bottom:1rem;position:relative;z-index:1;">🤖✨</div>
+                <h3 style="font-size:1.25rem;font-weight:800;margin:0 0 1rem;color:white;line-height:1.3;position:relative;z-index:1;">Eén prompt, vijf minuten</h3>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.625rem;position:relative;z-index:1;">
+                    @foreach([
+                        '💬 Open Claude Code of Codex',
+                        '✍️ Typ: "Installeer BankBird voor me"',
+                        '☕ Pak een koffie',
+                        '🐦 BankBird draait — voor altijd op de achtergrond',
+                    ] as $item)
+                    <li style="font-size:0.9375rem;color:rgba(255,255,255,0.92);line-height:1.5;">{{ $item }}</li>
+                    @endforeach
+                </ul>
+                <div style="margin-top:1.5rem;padding:1rem;background:rgba(0,0,0,0.25);border-radius:0.75rem;font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;font-size:0.875rem;color:#A7F3D0;position:relative;z-index:1;">
+                    &gt; Installeer BankBird voor me.
+                </div>
+                <a href="{{ url('/install') }}" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.25rem;background:white;color:#1565C0;border-radius:0.75rem;font-weight:800;font-size:0.9375rem;padding:0.625rem 1.25rem;text-decoration:none;position:relative;z-index:1;">
+                    Zo werkt het →
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -171,7 +232,7 @@
 
                 <div style="display:flex;flex-direction:column;gap:2rem;">
                     @foreach([
-                        ['1', '#EEF5FF', '#1E88E5', 'Installeer BankBird', 'Clone de repo, draai een paar commando\'s en je hebt een draaiende instantie op je eigen server. Duurt vijf minuten.'],
+                        ['1', '#EEF5FF', '#1E88E5', 'Vraag Claude of Codex', 'Eén prompt — de AI installeert BankBird voor je via Laravel Herd. Geen technische kennis nodig, vijf minuten klaar.'],
                         ['2', '#F0FFF8', '#16C784', 'Importeer je bankafschrift', 'Upload je PDF of CSV van ING, Rabobank, ABN of een ander formaat. BankBird leest alles automatisch uit.'],
                         ['3', '#FFF8F0', '#FF8A3D', 'Geniet van het overzicht', 'AI categoriseert je transacties, je ziet mooie rapporten en hebt eindelijk rust over je financiën.'],
                     ] as [$num, $bg, $color, $title, $desc])
@@ -235,13 +296,13 @@
             <img src="{{ asset('images/icons/install.png') }}" alt="Installeer BankBird" style="height:200px;width:auto;filter:drop-shadow(0 12px 32px rgba(0,0,0,0.22));animation:float 4s ease-in-out infinite;margin-bottom:1.75rem;display:block;margin-left:auto;margin-right:auto;">
 
             <h2 style="font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:900;color:white;margin:0 0 1rem;letter-spacing:-0.02em;">
-                Klaar om te beginnen?
+                Eén prompt verwijderd
             </h2>
-            <p style="font-size:1.0625rem;color:rgba(255,255,255,0.82);margin:0 auto 2rem;max-width:480px;">
-                BankBird is gratis, open-source en klaar voor gebruik. Jouw financiën, jouw data, jouw server.
+            <p style="font-size:1.0625rem;color:rgba(255,255,255,0.82);margin:0 auto 2rem;max-width:520px;">
+                Open Claude of Codex, vraag om BankBird. Geen downloads, geen installers, geen terminal — gewoon AI die het werk doet.
             </p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;">
-                <a href="{{ url('/install') }}" class="bb-btn-white bb-btn-lg">Installeer BankBird</a>
+                <a href="{{ url('/install') }}" class="bb-btn-white bb-btn-lg">🤖 Laat AI installeren</a>
                 <a href="{{ url('/demo') }}" class="bb-btn-ghost-white bb-btn-lg">Bekijk demo</a>
             </div>
         </div>

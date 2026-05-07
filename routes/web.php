@@ -12,5 +12,6 @@ if (Demo::isMarketingSite()) {
     Route::get('/kennisbank', fn () => view('kennisbank'));
     Route::get('/vibe-dev', fn () => view('vibe-dev'));
     Route::get('/over', fn () => view('over'));
+    Route::get('/faq', fn () => view('faq'));
     Route::get('/legal', fn () => view('legal'));
 }

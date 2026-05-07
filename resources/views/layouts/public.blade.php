@@ -143,7 +143,43 @@
         }
         .bb-nav-link:hover { color: #1E88E5; background: #EEF5FF; }
         .bb-nav-link.active { color: #1E88E5; background: #EEF5FF; font-weight: 600; }
-        .bb-nav-link.github { display: flex; align-items: center; gap: 0.375rem; }
+        .bb-nav-link.github { display: flex; align-items: center; gap: 0.375rem; padding: 0.4rem 0.625rem; }
+
+        /* ── Nav dropdown ───────────────────────── */
+        .bb-nav-dropdown { position: relative; }
+        .bb-nav-dropdown-trigger {
+            display: inline-flex; align-items: center;
+            background: none; border: none; cursor: pointer;
+            font-family: inherit;
+        }
+        .bb-nav-dropdown-menu {
+            position: absolute; top: calc(100% + 0.5rem); left: 0;
+            min-width: 240px;
+            background: white;
+            border: 1px solid rgba(30,136,229,0.12);
+            border-radius: 0.875rem;
+            box-shadow: 0 12px 40px rgba(11,31,58,0.15);
+            padding: 0.5rem;
+            display: flex; flex-direction: column; gap: 0.125rem;
+            opacity: 0; visibility: hidden; transform: translateY(-6px);
+            transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+            z-index: 102;
+        }
+        .bb-nav-dropdown.open .bb-nav-dropdown-menu,
+        .bb-nav-dropdown:hover .bb-nav-dropdown-menu {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        .bb-nav-dropdown.open .bb-nav-dropdown-trigger svg,
+        .bb-nav-dropdown:hover .bb-nav-dropdown-trigger svg { transform: rotate(180deg); }
+        .bb-nav-dropdown-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 0.625rem;
+            text-decoration: none;
+            transition: background 0.12s;
+        }
+        .bb-nav-dropdown-item:hover { background: #EEF5FF; }
+        .bb-nav-dropdown-item.active { background: #EEF5FF; }
 
         /* ── Hamburger ───────────────────────────── */
         .bb-hamburger {
@@ -404,17 +440,46 @@
         <div class="bb-nav-links">
             <a href="{{ url('/') }}"           class="bb-nav-link @if(request()->is('/'))          active @endif">Home</a>
             <a href="{{ url('/install') }}"     class="bb-nav-link @if(request()->is('install'))    active @endif">Installatie</a>
-            <a href="{{ url('/kennisbank') }}"  class="bb-nav-link @if(request()->is('kennisbank')) active @endif">Kennisbank</a>
-            <a href="{{ url('/docs') }}"        class="bb-nav-link @if(request()->is('docs'))       active @endif">Docs</a>
-            <a href="{{ url('/vibe-dev') }}"    class="bb-nav-link @if(request()->is('vibe-dev'))   active @endif">Vibe Dev</a>
-            <a href="{{ url('/over') }}"        class="bb-nav-link @if(request()->is('over'))       active @endif">Over</a>
+
+            {{-- Docs dropdown: bundelt Docs, Kennisbank, Vibe Dev --}}
+            <div class="bb-nav-dropdown">
+                <button type="button" class="bb-nav-link bb-nav-dropdown-trigger @if(request()->is('docs') || request()->is('kennisbank') || request()->is('vibe-dev')) active @endif" aria-haspopup="true" aria-expanded="false">
+                    Documentatie
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:0.25rem;transition:transform 0.2s;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5l3 3 3-3"/></svg>
+                </button>
+                <div class="bb-nav-dropdown-menu" role="menu">
+                    <a href="{{ url('/docs') }}" class="bb-nav-dropdown-item @if(request()->is('docs')) active @endif" role="menuitem">
+                        <span style="font-size:1rem;">📚</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.875rem;color:#0B1F3A;">Docs</div>
+                            <div style="font-size:0.75rem;color:#6B7A99;">Technische documentatie</div>
+                        </div>
+                    </a>
+                    <a href="{{ url('/kennisbank') }}" class="bb-nav-dropdown-item @if(request()->is('kennisbank')) active @endif" role="menuitem">
+                        <span style="font-size:1rem;">📖</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.875rem;color:#0B1F3A;">Kennisbank</div>
+                            <div style="font-size:0.75rem;color:#6B7A99;">Begrippen en uitleg</div>
+                        </div>
+                    </a>
+                    <a href="{{ url('/vibe-dev') }}" class="bb-nav-dropdown-item @if(request()->is('vibe-dev')) active @endif" role="menuitem">
+                        <span style="font-size:1rem;">🛠️</span>
+                        <div>
+                            <div style="font-weight:700;font-size:0.875rem;color:#0B1F3A;">Vibe Dev</div>
+                            <div style="font-size:0.75rem;color:#6B7A99;">Bouwen met AI</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <a href="{{ url('/faq') }}"         class="bb-nav-link @if(request()->is('faq'))        active @endif">FAQ</a>
             <a href="{{ url('/updates') }}"     class="bb-nav-link @if(request()->is('updates'))    active @endif" style="position:relative;">
                 Updates
                 <span style="position:absolute;top:-4px;right:-8px;background:#FF8A3D;color:white;font-size:0.5rem;font-weight:800;padding:0.1rem 0.35rem;border-radius:99px;text-transform:uppercase;letter-spacing:0.04em;">Nieuw</span>
             </a>
-            <a href="https://github.com/AivionStudiosPlayground/bankbird" target="_blank" class="bb-nav-link github">
+            <a href="{{ url('/over') }}"        class="bb-nav-link @if(request()->is('over'))       active @endif">Over</a>
+            <a href="https://github.com/AivionStudiosPlayground/bankbird" target="_blank" class="bb-nav-link github" aria-label="GitHub repository">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
             </a>
         </div>
 
@@ -445,11 +510,12 @@
         <nav class="bb-mobile-nav">
             <a href="{{ url('/') }}"           class="@if(request()->is('/'))          active @endif">🏠 Home <span>→</span></a>
             <a href="{{ url('/install') }}"     class="@if(request()->is('install'))    active @endif">🚀 Installatie <span>→</span></a>
-            <a href="{{ url('/kennisbank') }}"  class="@if(request()->is('kennisbank')) active @endif">📖 Kennisbank <span>→</span></a>
+            <a href="{{ url('/faq') }}"         class="@if(request()->is('faq'))        active @endif">❓ FAQ <span>→</span></a>
             <a href="{{ url('/docs') }}"        class="@if(request()->is('docs'))       active @endif">📚 Documentatie <span>→</span></a>
+            <a href="{{ url('/kennisbank') }}"  class="@if(request()->is('kennisbank')) active @endif">📖 Kennisbank <span>→</span></a>
             <a href="{{ url('/vibe-dev') }}"    class="@if(request()->is('vibe-dev'))   active @endif">🛠️ Vibe Development <span>→</span></a>
-            <a href="{{ url('/over') }}"        class="@if(request()->is('over'))       active @endif">👋 Over <span>→</span></a>
             <a href="{{ url('/updates') }}"     class="@if(request()->is('updates'))    active @endif">✨ Updates <span style="background:#FF8A3D;color:white;font-size:0.625rem;font-weight:800;padding:0.1rem 0.5rem;border-radius:99px;">Nieuw</span></a>
+            <a href="{{ url('/over') }}"        class="@if(request()->is('over'))       active @endif">👋 Over <span>→</span></a>
             <a href="https://github.com/AivionStudiosPlayground/bankbird" target="_blank">💻 GitHub <span>↗</span></a>
         </nav>
         <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #EEF5FF;">
@@ -475,7 +541,7 @@
                 </div>
             </div>
             <nav style="display:flex; flex-wrap:wrap; gap:0.25rem;">
-                @foreach([['/', 'Home'], ['/demo', 'Demo'], ['/install', 'Installatie'], ['/kennisbank', 'Kennisbank'], ['/docs', 'Documentatie'], ['/vibe-dev', 'Vibe Dev'], ['/over', 'Over'], ['/updates', 'Updates'], ['https://github.com/AivionStudiosPlayground/bankbird', 'GitHub ↗']] as [$href, $label])
+                @foreach([['/', 'Home'], ['/demo', 'Demo'], ['/install', 'Installatie'], ['/faq', 'FAQ'], ['/docs', 'Documentatie'], ['/kennisbank', 'Kennisbank'], ['/vibe-dev', 'Vibe Dev'], ['/over', 'Over'], ['/updates', 'Updates'], ['https://github.com/AivionStudiosPlayground/bankbird', 'GitHub ↗']] as [$href, $label])
                     <a href="{{ $href }}" style="font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:none;padding:0.4rem 0.75rem;border-radius:0.5rem;transition:color 0.15s,background 0.15s;"
                        onmouseover="this.style.color='white';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.color='rgba(255,255,255,0.45)';this.style.background='transparent'">
                         {{ $label }}
@@ -567,7 +633,31 @@
         m.classList.remove('open');
         document.body.style.overflow = '';
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeMobileMenu(); closeAllNavDropdowns(); } });
+
+    // Nav dropdowns (click to toggle, click-outside to close — for keyboard / touch users)
+    function closeAllNavDropdowns() {
+        document.querySelectorAll('.bb-nav-dropdown.open').forEach(d => {
+            d.classList.remove('open');
+            const trigger = d.querySelector('.bb-nav-dropdown-trigger');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+    }
+    document.querySelectorAll('.bb-nav-dropdown-trigger').forEach(trigger => {
+        trigger.addEventListener('click', e => {
+            e.stopPropagation();
+            const dropdown = trigger.closest('.bb-nav-dropdown');
+            const wasOpen = dropdown.classList.contains('open');
+            closeAllNavDropdowns();
+            if (!wasOpen) {
+                dropdown.classList.add('open');
+                trigger.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.bb-nav-dropdown')) closeAllNavDropdowns();
+    });
 </script>
 
 </body>
