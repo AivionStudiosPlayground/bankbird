@@ -130,3 +130,118 @@ php artisan test --filter=testName       # single test
 - Database schema for existing columns (add new migrations instead)
 - The `app/Providers/Filament/AdminPanelProvider.php` panel ID or path
 - Any existing migration file
+
+## End-user installation protocol
+
+This section is for agents (Claude Code, Codex CLI, etc.) helping a non-technical user install BankBird on their own machine. The user prompt will typically be: *"Installeer BankBird voor me."*
+
+**Operating principle**: the user does not know what PHP, Composer, or a terminal is. Run all checks yourself. Only ask the user to act when there is a Windows/macOS dialog they must click (UAC, installer wizard). Do **not** dump commands like `php -v` on them.
+
+### 0. Confirm starting state
+
+The user has cloned the repo and is sitting in the project root. Verify:
+- `composer.json` exists in the current working directory.
+- The `.git` directory is present.
+
+If not, ask the user where they cloned it.
+
+### 1. Detect Laravel Herd
+
+Herd is the recommended runtime. It bundles PHP 8.4, Composer and Node, runs as a background service, and serves `*.test` domains automatically — eliminating "how do I start the app?" forever.
+
+Detect:
+```bash
+herd --version
+```
+
+- **Found**: skip to step 3.
+- **Not found**: continue to step 2.
+
+### 2. Install Herd (if missing)
+
+Tell the user, in plain language, what you're about to do and ask permission **once**:
+
+> "Voor de soepelste ervaring installeer ik Laravel Herd — een gratis tool die BankBird altijd op de achtergrond beschikbaar maakt op `http://bankbird.test`. Ik download de installer en start hem. Windows vraagt je éénmalig om Ja te klikken op een beveiligingsvenster (UAC). Akkoord?"
+
+After explicit approval:
+
+1. Determine the correct installer URL by fetching `https://herd.laravel.com/` and selecting the OS-specific download link (Windows `.exe` or macOS `.dmg`).
+2. Download to a temp location.
+3. Launch the installer and wait for it to exit.
+4. Re-run `herd --version` to confirm. If Herd added itself to PATH but the current shell hasn't picked it up, instruct the user to open a fresh terminal — but resume the install yourself in that new shell rather than handing the work back.
+
+If the user declines Herd, fall back to the **No-Herd path** at the bottom of this section.
+
+### 3. Link the project to Herd
+
+In the project root:
+
+```bash
+herd link bankbird
+```
+
+This registers the folder as `http://bankbird.test`. Verify success by checking that `herd links` (or equivalent) lists `bankbird`.
+
+### 4. Run setup
+
+One command does the rest:
+
+```bash
+composer install
+composer run setup
+```
+
+`composer run setup` (defined in `composer.json`) handles: `.env` creation, `APP_KEY` generation, SQLite file, migrations + seeders, `npm install`, and `npm run build`.
+
+### 5. Create the first admin user
+
+```bash
+php artisan make:filament-user
+```
+
+This is interactive. Either:
+- Pass values yourself if the user has already given you a name + email + password, or
+- Ask the user for those three things in one message — not three separate prompts.
+
+### 6. Smoke test
+
+Do **not** declare success until this passes:
+
+```bash
+curl -sI http://bankbird.test/admin/login
+```
+
+Expected: `HTTP/1.1 200` (or `302` redirect to login). Then fetch the body:
+
+```bash
+curl -s http://bankbird.test/admin/login
+```
+
+Verify the response:
+- Contains a `<form` element.
+- Does **not** contain the strings `Deprecated:`, `Warning:`, `Fatal error`, `Whoops`.
+- Contains Livewire's `wire:` attributes (proof Livewire markup rendered, not a static error page).
+
+If any check fails, diagnose and fix before continuing — never report "klaar" on a half-broken install.
+
+### 7. Hand off
+
+Open the user's default browser to `http://bankbird.test/admin`, then send one short message:
+
+> "BankBird draait. Open je browser op http://bankbird.test/admin en log in met de gegevens die je net hebt ingevuld. Herd start automatisch met je computer mee — je hoeft hierna niets meer op te starten."
+
+Do **not** explain `composer run dev`, `php artisan serve`, or any developer tooling. Those are irrelevant to this user.
+
+### No-Herd path (fallback only)
+
+Only used if the user declined Herd installation. Be honest about the tradeoff:
+
+> "Zonder Herd moet je de lokale server elke keer handmatig starten met `composer run dev`. Wil je dat liever?"
+
+If they confirm:
+1. Verify `php --version` (must be `8.4.x`), `composer --version`, `node --version` (≥ 20). If any are missing, stop and tell the user which one — do not try to install language runtimes yourself.
+2. `composer install` → `composer run setup` → `php artisan make:filament-user`.
+3. Smoke-test against `http://127.0.0.1:8000/admin/login` after starting `composer run dev` in the background.
+4. Tell them: *"Open `http://127.0.0.1:8000/admin`. Let op: deze server moet je elke keer opnieuw starten met `composer run dev` als je 'm gebruikt."*
+
+**Use `127.0.0.1`, not `localhost`** — on Windows `localhost` often resolves to `::1` (IPv6) while `php artisan serve` only listens on IPv4.
