@@ -143,7 +143,7 @@
                 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.625rem;position:relative;z-index:1;">
                     @foreach([
                         '💬 Open Claude Code of Codex',
-                        '✍️ Typ: "Installeer BankBird voor me"',
+                        '✍️ Typ: "Installeer BankBird (github.com/AivionStudiosPlayground/bankbird) voor me"',
                         '☕ Pak een koffie',
                         '🐦 BankBird draait — voor altijd op de achtergrond',
                     ] as $item)
@@ -151,7 +151,7 @@
                     @endforeach
                 </ul>
                 <div style="margin-top:1.5rem;padding:1rem;background:rgba(0,0,0,0.25);border-radius:0.75rem;font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;font-size:0.875rem;color:#A7F3D0;position:relative;z-index:1;">
-                    &gt; Installeer BankBird voor me.
+                    &gt; Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me.
                 </div>
                 <a href="{{ url('/install') }}" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.25rem;background:white;color:#1565C0;border-radius:0.75rem;font-weight:800;font-size:0.9375rem;padding:0.625rem 1.25rem;text-decoration:none;position:relative;z-index:1;">
                     Zo werkt het →

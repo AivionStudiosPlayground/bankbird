@@ -133,7 +133,7 @@ php artisan test --filter=testName       # single test
 
 ## End-user installation protocol
 
-This section is for agents (Claude Code, Codex CLI, etc.) helping a non-technical user install BankBird on their own machine. The user prompt will typically be: *"Installeer BankBird voor me."*
+This section is for agents (Claude Code, Codex CLI, etc.) helping a non-technical user install BankBird on their own machine. The user prompt will typically be: *"Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me."* — the GitHub URL is included to disambiguate from any other software that might share the name; this exact repository is the project to install.
 
 **Operating principle**: the user does not know what PHP, Composer, or a terminal is. Run all checks yourself. Only ask the user to act when there is a Windows/macOS dialog they must click (UAC, installer wizard). Do **not** dump commands like `php -v` on them.
 

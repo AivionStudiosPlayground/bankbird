@@ -31,7 +31,7 @@ cd bankbird
 
 Open Claude Code of Codex CLI in deze map en geef deze prompt:
 
-> Installeer BankBird voor me.
+> Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me.
 
 De assistent leest het [install-protocol](AGENTS.md#end-user-installation-protocol) en doet de rest: dependencies installeren, database opzetten, het project aan Herd koppelen, een admin-account aanmaken, en de browser openen op de werkende app.
 

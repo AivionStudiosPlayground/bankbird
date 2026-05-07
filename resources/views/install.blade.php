@@ -118,7 +118,7 @@
                         <div style="width:10px;height:10px;border-radius:50%;background:#27C93F;"></div>
                         <span style="font-size:0.6875rem;color:rgba(255,255,255,0.3);font-family:monospace;margin-left:auto;">prompt.txt</span>
                     </div>
-                    <pre id="install-prompt" style="margin:0;padding:1.25rem;font-size:0.875rem;line-height:1.7;color:rgba(255,255,255,0.9);font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;">Installeer BankBird voor me.</pre>
+                    <pre id="install-prompt" style="margin:0;padding:1.25rem;font-size:0.875rem;line-height:1.7;color:rgba(255,255,255,0.9);font-family:'JetBrains Mono','Fira Code',ui-monospace,monospace;">Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me.</pre>
                 </div>
                 <p style="margin:0.875rem 0 0;font-size:0.75rem;color:rgba(255,255,255,0.55);line-height:1.55;">
                     Eén regel volstaat. De agent leest het <code style="background:rgba(255,255,255,0.1);padding:0.05rem 0.3rem;border-radius:0.25rem;font-size:0.95em;color:rgba(255,255,255,0.85);">End-user installation protocol</code> in <code style="background:rgba(255,255,255,0.1);padding:0.05rem 0.3rem;border-radius:0.25rem;font-size:0.95em;color:rgba(255,255,255,0.85);">AGENTS.md</code> en doorloopt zelf alle stappen.
@@ -129,7 +129,7 @@
 </section>
 
 <script>
-const installPrompt = `Installeer BankBird voor me.`;
+const installPrompt = `Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me.`;
 
 function copyPrompt() {
     function showFeedback() {
@@ -253,7 +253,7 @@ function copyPrompt() {
                         <div class="bb-dot" style="background:#27C93F;"></div>
                         <span style="margin-left:auto;font-size:0.6875rem;color:rgba(255,255,255,0.3);font-family:monospace;">prompt</span>
                     </div>
-                    <pre style="font-size:0.9375rem;line-height:1.6;color:white;">Installeer BankBird voor me.</pre>
+                    <pre style="font-size:0.9375rem;line-height:1.6;color:white;">Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me.</pre>
                 </div>
                 <div style="margin-top:1.25rem;" class="bb-alert bb-alert-blue">
                     <span style="font-size:1.125rem;flex-shrink:0;">📜</span>

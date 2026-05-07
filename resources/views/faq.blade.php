@@ -269,7 +269,7 @@
                 <details class="bb-faq-item">
                     <summary>Hoe installeer ik BankBird?</summary>
                     <div class="bb-faq-body">
-                        <p>De simpelste manier: installeer <a href="https://herd.laravel.com/" target="_blank" rel="noopener">Laravel Herd</a> (één gratis download), clone de repository, en vraag <strong>Claude Code of Codex</strong>: <em>"Installeer BankBird voor me."</em> De AI doet de rest.</p>
+                        <p>De simpelste manier: installeer <a href="https://herd.laravel.com/" target="_blank" rel="noopener">Laravel Herd</a> (één gratis download), clone de repository, en vraag <strong>Claude Code of Codex</strong>: <em>"Installeer BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me."</em> De AI doet de rest.</p>
                         <p>Volledige uitleg met screenshots staat op de <a href="{{ url('/install') }}">installatiepagina</a>.</p>
                     </div>
                 </details>
