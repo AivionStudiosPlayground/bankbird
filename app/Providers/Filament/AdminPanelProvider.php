@@ -6,8 +6,10 @@ use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\BackupPage;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\ManageSettings;
+use App\Http\Middleware\BlockDemoUserOutsideDemoHost;
 use App\Http\Middleware\DemoMode;
 use App\Models\AppSetting;
+use App\Support\Demo;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -62,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path(\App\Support\Demo::active() ? '' : 'admin')
+            ->path(Demo::active() ? '' : 'admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login(Login::class)
             ->profile(EditProfile::class, isSimple: false)
@@ -173,6 +175,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                BlockDemoUserOutsideDemoHost::class,
             ]);
     }
 }
