@@ -551,7 +551,10 @@
         </div>
         <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
             <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
-                <p style="margin:0;font-size:0.75rem;color:rgba(255,255,255,0.25);">© 2026 BankBird</p>
+                <p style="margin:0;font-size:0.75rem;color:rgba(255,255,255,0.25);">
+                    © 2026 BankBird
+                    <span style="margin-left:0.5rem;opacity:0.7;">v{{ \App\Support\Version::current() }}</span>
+                </p>
                 <a href="{{ url('/legal') }}" style="font-size:0.75rem;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Voorwaarden & Privacy</a>
             </div>
             <p style="margin:0;font-size:0.75rem;color:rgba(255,255,255,0.25);">

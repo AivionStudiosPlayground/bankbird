@@ -300,6 +300,33 @@
                         <p>Ja. BankBird ondersteunt multi-user met data-isolatie per gebruiker. Voor productie-deployment heb je dan wel een server (VPS of Laravel Cloud), HTTPS, en een MySQL-database aan te bevelen — zie de "Online gebruik" sectie in de README.</p>
                     </div>
                 </details>
+                <details class="bb-faq-item">
+                    <summary>Hoe weet ik dat er een update beschikbaar is?</summary>
+                    <div class="bb-faq-body">
+                        <p>Bij elke admin-pagina toont BankBird automatisch een oranje banner als een nieuwere versie op GitHub is uitgebracht. De banner linkt naar <code>/admin/updates</code> waar je de release notes kunt lezen en de update-prompt kunt kopiëren voor Claude of Codex.</p>
+                        <p>De huidige versie staat altijd onderaan in de sidebar — bijvoorbeeld <code>v1.0.0</code> — met een opvallend label als er een update klaar staat.</p>
+                    </div>
+                </details>
+                <details class="bb-faq-item">
+                    <summary>Hoe update ik BankBird?</summary>
+                    <div class="bb-faq-body">
+                        <p>Net als de installatie — open Claude Code of Codex CLI in je projectmap en geef de prompt: <em>"Update BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me."</em> De AI volgt het <code>End-user upgrade protocol</code> in <code>AGENTS.md</code>: backup van je database, code pullen, dependencies bijwerken, migraties draaien en smoke-test op de loginpagina.</p>
+                        <p>Wil je het zelf doen? Op de <code>/admin/updates</code> pagina staan de exacte commando's onder "Of handmatig (voor ontwikkelaars)".</p>
+                    </div>
+                </details>
+                <details class="bb-faq-item">
+                    <summary>Kan ik BankBird zelf aanpassen zonder dat updates breken?</summary>
+                    <div class="bb-faq-body">
+                        <p><strong>Ja, mits je je aanpassingen op de juiste plek zet.</strong> BankBird heeft twee speciale folders waar wij bij updates <strong>nooit</strong> aankomen:</p>
+                        <ul style="margin: 0 0 0.75rem 1.25rem; padding: 0; list-style: disc;">
+                            <li><code>app/Custom/</code> — voor jouw eigen PHP-code (eigen Filament-resources, services, jobs)</li>
+                            <li><code>resources/views/custom/</code> — voor jouw eigen Blade-templates</li>
+                        </ul>
+                        <p>Code en views in deze folders blijven bij elke <code>git pull</code> intact, zonder merge-conflicten. In elke folder staat een <code>README.md</code> met voorbeelden.</p>
+                        <p>Wijzigingen aan onze core-bestanden (modellen, migraties, bestaande Filament-resources, layouts) zijn op eigen risico — bij upgrades kunnen daar conflicten ontstaan die de AI of jij handmatig moet oplossen.</p>
+                        <p>Configuratie zoals logo, brandkleuren en AI-keys gaan via de <strong>Instellingen</strong>-pagina in de admin — dat raakt geen code en blijft bij updates altijd intact.</p>
+                    </div>
+                </details>
             </div>
         </div>
 

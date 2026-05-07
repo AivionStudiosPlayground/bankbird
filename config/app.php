@@ -129,4 +129,20 @@ return [
 
     'home_host' => env('HOME_HOST', 'bankbird.app'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | Bumped bij elke release; vergeleken met de laatste GitHub-release om
+    | de update-melding in de admin te tonen. Tag-formaat: semver met v-prefix
+    | op GitHub (vX.Y.Z), hier zonder prefix.
+    */
+
+    'version' => '1.0.0',
+
+    'release_date' => '2026-05-07',
+
+    'github_repo' => 'AivionStudiosPlayground/bankbird',
+
 ];
