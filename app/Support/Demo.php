@@ -2,12 +2,8 @@
 
 namespace App\Support;
 
-use App\Models\User;
-
 class Demo
 {
-    public const USER_EMAIL = 'demo@bankbird.app';
-
     public static function active(): bool
     {
         if (app()->runningInConsole() && ! app()->runningUnitTests()) {
@@ -24,10 +20,5 @@ class Demo
         }
 
         return request()->getHost() === config('app.home_host', 'bankbird.app');
-    }
-
-    public static function isDemoUser(?User $user): bool
-    {
-        return $user !== null && $user->email === self::USER_EMAIL;
     }
 }

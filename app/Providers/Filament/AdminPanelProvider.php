@@ -6,7 +6,6 @@ use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\BackupPage;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\ManageSettings;
-use App\Http\Middleware\BlockDemoUserOutsideDemoHost;
 use App\Http\Middleware\DemoMode;
 use App\Models\AppSetting;
 use App\Support\Demo;
@@ -175,7 +174,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                BlockDemoUserOutsideDemoHost::class,
             ]);
     }
 }
