@@ -245,3 +245,82 @@ If they confirm:
 4. Tell them: *"Open `http://127.0.0.1:8000/admin`. Let op: deze server moet je elke keer opnieuw starten met `composer run dev` als je 'm gebruikt."*
 
 **Use `127.0.0.1`, not `localhost`** — on Windows `localhost` often resolves to `::1` (IPv6) while `php artisan serve` only listens on IPv4.
+
+## End-user upgrade protocol
+
+This section is for agents helping a non-technical user upgrade an existing BankBird installation. The user prompt will typically be: *"Update BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me."*
+
+The user already has BankBird running. Their data is in their local database. They want the latest version from GitHub installed without losing anything.
+
+### 0. Confirm starting state
+
+- Verify the user is in the BankBird project directory (`composer.json` + `.git` present).
+- Run `git status` — if there are uncommitted user changes, **stop and discuss**. Their changes might be customisations they want to keep. Do not blindly stash or discard.
+
+### 1. Backup the database first
+
+Always before pulling any code changes:
+
+```bash
+php artisan db:show --counts
+```
+
+For SQLite installs, copy `database/database.sqlite` to `database/database.sqlite.backup-YYYY-MM-DD`. For MySQL, instruct the user to run a `mysqldump` (give them the exact command for their setup).
+
+Tell the user: *"Ik heb een backup gemaakt op `<pad>`. Mocht er na de update iets mis gaan, kunnen we hier op terugvallen."*
+
+### 2. Pull the latest code
+
+```bash
+git fetch origin
+git pull origin master
+```
+
+If a **merge conflict** appears: stop, list the conflicting files, and walk the user through resolution one file at a time. Prefer keeping their customisations in `app/Custom/` and `resources/views/custom/` (those should never conflict because we don't touch them). For conflicts in core files: read both versions, explain the conflict in plain language, and propose a resolution that preserves their intent.
+
+### 3. Update dependencies
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm install
+npm run build
+```
+
+### 4. Run migrations
+
+```bash
+php artisan migrate --force
+```
+
+`--force` is required because the agent runs non-interactively. Migrations are additive in BankBird — we never drop columns, only add or modify.
+
+### 5. Refresh caches
+
+```bash
+php artisan config:cache
+php artisan view:cache
+php artisan event:cache
+```
+
+**Do not run `route:cache`** — `routes/web.php` registers marketing-routes conditionally on the request host (`Demo::isMarketingSite()`). Caching at compile-time would omit them.
+
+### 6. Smoke test
+
+Same as the install protocol — `curl /admin/login`, expect 200, no `Deprecated:`/`Warning:`/`Whoops` in body, Livewire markup present.
+
+### 7. Hand off
+
+Open the user's browser to their admin URL (`http://bankbird.test/admin` if Herd, or whatever their setup uses). Send one short message:
+
+> "BankBird is bijgewerkt naar v<X.Y.Z>. Open je browser, log in en controleer of alles nog werkt. De backup van vóór de update staat op `<pad>` — die kun je weghalen als alles soepel draait."
+
+### Customisation-conflict handling
+
+If the user has modified BankBird core files (anything outside `app/Custom/` and `resources/views/custom/`) and `git pull` produces conflicts:
+
+1. **Never** discard the user's changes blindly with `git checkout --theirs` or `git checkout --ours`.
+2. Read both versions of each conflicting file.
+3. Identify the user's intent (visual change, behavior change, custom logic).
+4. Propose a merged version that retains the user's intent and incorporates the upstream changes.
+5. Show the user the proposed result before writing the file.
+6. Tell them: *"Ik heb je aanpassingen aan `<file>` proberen te behouden in deze nieuwe versie. Controleer in de browser of het nog werkt zoals jij wilde."*

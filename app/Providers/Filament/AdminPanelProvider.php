@@ -101,6 +101,10 @@ class AdminPanelProvider extends PanelProvider
                 fn () => view('partials.demo-banner'),
             )
             ->renderHook(
+                PanelsRenderHook::BODY_START,
+                fn () => view('partials.update-banner'),
+            )
+            ->renderHook(
                 PanelsRenderHook::BODY_END,
                 function (): string {
                     return <<<'HTML'
