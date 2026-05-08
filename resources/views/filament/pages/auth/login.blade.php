@@ -5,9 +5,15 @@
         <div class="bb-login-form-card">
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_PAGE_START, scopes: $this->getRenderHookScopes()) }}
 
-            <div class="bb-login-form-inner">
+            <div class="bb-login-form-inner @class(['bb-login-form-inner--admin' => ! \App\Support\Demo::active()])">
                 @if ($this->hasLogo())
-                    <x-filament-panels::logo />
+                    @if (! \App\Support\Demo::active())
+                        <div class="bb-login-logo-wrapper">
+                            <x-filament-panels::logo />
+                        </div>
+                    @else
+                        <x-filament-panels::logo />
+                    @endif
                 @endif
 
                 @if (filled($this->getHeading()) || filled($this->getSubheading()))
@@ -39,6 +45,13 @@
         </div>
 
     </div>
+
+    @if (! \App\Support\Demo::active())
+        <footer class="bb-login-footer">
+            BankBird v{{ config('app.version') }}<br />
+            Built with care by Aivion Studios
+        </footer>
+    @endif
 
     @if (! $this instanceof \Filament\Tables\Contracts\HasTable)
         <x-filament-actions::modals />

@@ -687,6 +687,7 @@ table th,
 
 .bb-login-outer {
     display: flex;
+    flex-direction: column;
     min-height: 100dvh;
     align-items: center;
     justify-content: center;
@@ -729,6 +730,30 @@ table th,
 .bb-login-form-inner .fi-logo {
     width: auto;
     align-self: flex-start;
+}
+
+/* Admin-only: gecentreerd, breder logo boven het inloggen-heading */
+.bb-login-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.bb-login-logo-wrapper .fi-logo {
+    width: auto;
+    height: 6rem !important;
+    align-self: center;
+}
+
+/* Footer onder het login-paneel — alleen admin-context */
+.bb-login-footer {
+    width: 100%;
+    max-width: 960px;
+    margin-top: 1.75rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.8125rem;
+    line-height: 1.6;
 }
 
 /* Right: image card — hidden on mobile, shown on md+ */
