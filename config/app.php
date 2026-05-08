@@ -130,6 +130,13 @@ return [
     'home_host' => env('HOME_HOST', 'bankbird.app'),
 
     /*
+    | Lokale gecombineerde host: één Herd-/Valet-domein dat marketing, demo
+    | en admin via path-prefixes serveert (`/`, `/demo`, `/dev`). Productie
+    | blijft onveranderd op aparte hosts. Leeg laten in productie.
+    */
+    'local_host' => env('LOCAL_HOST'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Version
     |--------------------------------------------------------------------------

@@ -17,6 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/database/database.sqlite
+/database/*.sqlite
+/database/*.sqlite-journal
 /.claude/settings.local.json
 /storage/logs/browser.log
