@@ -42,13 +42,36 @@ class DemoTest extends TestCase
         $this->assertSame('', Demo::panelPath());
     }
 
-    public function test_production_other_host_uses_admin_panel_path(): void
+    public function test_production_other_host_uses_root_panel_path(): void
     {
-        $this->fakeRequest('dev.bankbird.app', '/admin');
+        $this->fakeRequest('dev.bankbird.app', '/');
 
         $this->assertFalse(Demo::active());
         $this->assertFalse(Demo::isMarketingSite());
+        $this->assertSame('', Demo::panelPath());
+    }
+
+    public function test_marketing_host_keeps_admin_panel_path(): void
+    {
+        $this->fakeRequest('bankbird.app', '/admin');
+
+        $this->assertTrue(Demo::isMarketingSite());
         $this->assertSame('admin', Demo::panelPath());
+    }
+
+    public function test_panel_url_resolves_per_host(): void
+    {
+        $this->fakeRequest('bankbird.app', '/');
+        $this->assertSame(url('/admin/updates'), Demo::panelUrl('updates'));
+
+        $this->fakeRequest('demo.bankbird.app', '/');
+        $this->assertSame(url('/updates'), Demo::panelUrl('updates'));
+
+        $this->fakeRequest('selfhosted.example.com', '/');
+        $this->assertSame(url('/updates'), Demo::panelUrl('updates'));
+
+        $this->fakeRequest('bankbird.app.test', '/dev');
+        $this->assertSame(url('/dev/updates'), Demo::panelUrl('updates'));
     }
 
     public function test_local_host_root_serves_marketing(): void

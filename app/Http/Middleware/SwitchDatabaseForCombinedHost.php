@@ -22,10 +22,26 @@ class SwitchDatabaseForCombinedHost
             return $next($request);
         }
 
-        $connection = Demo::active() ? 'sqlite_demo' : 'sqlite_dev';
+        // Livewire's update endpoint is global (/livewire-xxx/update) and shares no path prefix
+        // with the panel that rendered it. Without this, demo-panel form submits would route to
+        // sqlite_dev and 419 on every CSRF check. Fall back to the Referer to identify the panel.
+        $isDemo = Demo::active() || $this->refererStartsWithDemo($request);
 
-        config(['database.default' => $connection]);
+        config(['database.default' => $isDemo ? 'sqlite_demo' : 'sqlite_dev']);
 
         return $next($request);
+    }
+
+    private function refererStartsWithDemo(Request $request): bool
+    {
+        $referer = $request->headers->get('referer');
+
+        if (! $referer) {
+            return false;
+        }
+
+        $path = ltrim((string) parse_url($referer, PHP_URL_PATH), '/');
+
+        return $path === 'demo' || str_starts_with($path, 'demo/');
     }
 }

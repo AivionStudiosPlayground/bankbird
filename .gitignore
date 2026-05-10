@@ -20,4 +20,6 @@ yarn-error.log
 /database/*.sqlite
 /database/*.sqlite-journal
 /.claude/settings.local.json
+/.claude/worktrees
 /storage/logs/browser.log
+/notes

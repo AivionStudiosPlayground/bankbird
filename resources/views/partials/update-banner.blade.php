@@ -33,7 +33,7 @@
             BankBird <strong>v{{ $latest }}</strong> is beschikbaar
             (huidig: v{{ $current }})
             &mdash;
-            <a href="{{ url('/admin/updates') }}" style="color: white; font-weight: 700; text-decoration: underline; text-underline-offset: 2px;">
+            <a href="{{ Demo::panelUrl('updates') }}" style="color: white; font-weight: 700; text-decoration: underline; text-underline-offset: 2px;">
                 bekijk wijzigingen en update-instructies →
             </a>
         </span>

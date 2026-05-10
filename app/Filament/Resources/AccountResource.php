@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -22,6 +23,28 @@ class AccountResource extends Resource
     use RestrictsInDemoMode;
 
     protected static ?string $model = Account::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'iban'];
+    }
+
+    /**
+     * @param  Account  $record
+     * @return array<string, string>
+     */
+    public static function getGlobalSearchResultDetails($record): array
+    {
+        return array_filter([
+            'IBAN' => $record->iban,
+            'Saldo' => '€ '.number_format((float) $record->balance, 2, ',', '.'),
+        ]);
+    }
 
     public static function getNavigationIcon(): string
     {
@@ -104,6 +127,16 @@ class AccountResource extends Resource
                 TextColumn::make('type')
                     ->label('Type')
                     ->badge(),
+
+                ImageColumn::make('bank_logo_url')
+                    ->label('Bank')
+                    ->disk(null)
+                    ->imageHeight(28)
+                    ->square()
+                    ->extraImgAttributes(fn (Account $record): array => [
+                        'class' => 'object-contain',
+                        'title' => $record->bank_name ?? '—',
+                    ]),
 
                 TextColumn::make('iban')
                     ->label('IBAN')

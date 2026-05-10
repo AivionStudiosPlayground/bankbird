@@ -41,6 +41,75 @@
     display: block;
 }
 
+/* Global search: zoekbalk strekt zich uit over het midden van de topbar
+   (tussen logo links en notificatie/avatar rechts). */
+.fi-topbar nav {
+    gap: 1.25rem;
+}
+
+.fi-topbar-end {
+    flex: 1 1 auto !important;
+    /* Filament zet margin-inline-start: auto wat de container rechts uitlijnt
+       en flex-grow blokkeert; expliciet resetten zodat hij echt het midden
+       opvult. */
+    margin-inline-start: 0 !important;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.fi-topbar-end .fi-global-search-ctn,
+.fi-topbar-end .fi-global-search,
+.fi-topbar-end .fi-global-search-field,
+.fi-topbar-end .fi-global-search-field .fi-input-wrp {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+/* Resultaten-dropdown net zo breed als de zoekbalk */
+.fi-topbar-end .fi-global-search-results-ctn {
+    width: 100%;
+    max-width: none;
+}
+
+/* Notifications + user menu blijven rechts en compact */
+.fi-topbar-end .fi-topbar-database-notifications-btn,
+.fi-topbar-end .fi-user-menu {
+    flex: 0 0 auto;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   TOP-NAVIGATION op één regel: [logo] [nav] [search + avatar]
+   Filament's default topbar-layout houdt alles in een enkele flex-row;
+   we tweaken alleen de styling van de nav-items (hover + actieve route).
+   ───────────────────────────────────────────────────────────────────── */
+.fi-topbar-nav-groups {
+    gap: 0.25rem;
+}
+
+.fi-topbar-nav-groups .fi-topbar-item-btn,
+.fi-topbar-nav-groups a[href] {
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: #475467;
+    transition: background 0.15s, color 0.15s;
+}
+
+.fi-topbar-nav-groups .fi-topbar-item-btn:hover,
+.fi-topbar-nav-groups a[href]:hover {
+    background: #F0F6FF;
+    color: #1E88E5;
+}
+
+.fi-topbar-nav-groups .fi-active,
+.fi-topbar-nav-groups [aria-current="page"] {
+    background: #E8F1FE;
+    color: #1E88E5;
+    font-weight: 600;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════ */
 /* SIDEBAR — dark navy, no separate logo header (logo is in topbar)       */
 /* ═══════════════════════════════════════════════════════════════════════ */
@@ -158,6 +227,53 @@
 
 .ma-sidebar-footer a:hover {
     color: rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Page footer (top-navigation layout) ─────────────────────────────── */
+
+.ma-page-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1.25rem 1rem 1.5rem;
+    font-size: 0.7rem;
+    color: rgba(11, 31, 58, 0.45);
+    letter-spacing: 0.01em;
+}
+
+.ma-page-footer a {
+    color: rgba(11, 31, 58, 0.6);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.ma-page-footer a:hover {
+    color: #1E88E5;
+}
+
+.ma-page-footer__sep {
+    opacity: 0.4;
+}
+
+.ma-page-footer__update {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #FF8A3D;
+    color: white !important;
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 99px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.ma-page-footer__update:hover {
+    color: white !important;
+    filter: brightness(1.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════ */
@@ -795,4 +911,332 @@ table th,
     font-weight: 700;
     letter-spacing: -0.01em;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* DASHBOARD — bewerkbare widget-grid (drag-drop, hide/show, edit-mode)   */
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+.bb-dashboard-edit-banner {
+    display: flex;
+    gap: 0.875rem;
+    align-items: center;
+    padding: 0.875rem 1.125rem;
+    margin-bottom: 1rem;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 0.75rem;
+    color: #78350F;
+}
+
+.bb-dashboard-edit-banner__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.bb-dashboard-edit-banner__action {
+    flex: 0 0 auto;
+}
+
+.bb-dashboard-edit-banner__icon {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    background: #FBBF24;
+    color: #78350F;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bb-dashboard-edit-banner__icon svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.bb-dashboard-edit-banner__title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin: 0 0 0.125rem 0;
+    color: #78350F;
+}
+
+.bb-dashboard-edit-banner__subtitle {
+    font-size: 0.8125rem;
+    margin: 0;
+    color: #92400E;
+    line-height: 1.5;
+}
+
+/* Widget-grid: 12 kolommen op tablet+ zodat we 1/2/3 widgets per rij
+   precies kunnen verdelen (12, 6 of 4 kolommen per tegel). Mobiel = 1
+   kolom — alles netjes onder elkaar gestapeld. */
+.bb-dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .bb-dashboard-grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+}
+
+.bb-dashboard-tile {
+    grid-column: span 1;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .bb-dashboard-tile {
+        grid-column: span var(--bb-tile-span, 12);
+    }
+}
+
+/* Edit-modus: onderbroken accent-border per tegel zodat het duidelijk is
+   dat je in een bewerk-staat zit. */
+.bb-dashboard-tile--editing {
+    border: 2px dashed #1E88E5;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    background: rgba(30, 136, 229, 0.04);
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.bb-dashboard-tile--editing:hover {
+    background: rgba(30, 136, 229, 0.08);
+    border-color: #1565C0;
+}
+
+.bb-dashboard-tile--ghost {
+    opacity: 0.4;
+}
+
+.bb-dashboard-tile--chosen,
+.bb-dashboard-tile--dragging {
+    cursor: grabbing;
+}
+
+.bb-dashboard-tile__overlay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.375rem 0.625rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0.5rem;
+    border: 1px solid #DDEAF3;
+}
+
+.bb-dashboard-tile__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1a2332;
+}
+
+.bb-dashboard-tile__label-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #1E88E5;
+}
+
+.bb-dashboard-tile__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.bb-dashboard-tile__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.375rem;
+    color: #475467;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.bb-dashboard-tile__action:hover {
+    background: #F0F6FF;
+    color: #1E88E5;
+}
+
+.bb-dashboard-tile__action svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.bb-dashboard-tile__handle {
+    cursor: grab;
+}
+
+.bb-dashboard-tile__handle:active {
+    cursor: grabbing;
+}
+
+/* Breedte-segment-control: drie compacte knoppen [1] [2] [3] */
+.bb-dashboard-tile__span-group {
+    display: inline-flex;
+    background: #F0F6FF;
+    border: 1px solid #DDEAF3;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-right: 0.25rem;
+}
+
+.bb-dashboard-tile__span-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475467;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.bb-dashboard-tile__span-btn + .bb-dashboard-tile__span-btn {
+    border-left: 1px solid #DDEAF3;
+}
+
+.bb-dashboard-tile__span-btn:hover {
+    background: #E8F1FE;
+    color: #1E88E5;
+}
+
+.bb-dashboard-tile__span-btn--active {
+    background: #1E88E5;
+    color: #ffffff;
+}
+
+.bb-dashboard-tile__span-btn--active:hover {
+    background: #1565C0;
+    color: #ffffff;
+}
+
+/* Maak de eigenlijke widget-content tijdens edit-modus iets minder
+   prominent — zodat de focus op de overlay-controls ligt. */
+.bb-dashboard-tile__content--editing {
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+/* ─────── Beschikbare widgets-overlay onderaan ─────── */
+
+.bb-dashboard-library {
+    margin-top: 1.5rem;
+    padding: 1.125rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid #DDEAF3;
+    border-radius: 0.875rem;
+    box-shadow: 0 1px 3px rgba(11, 31, 58, 0.04);
+}
+
+.bb-dashboard-library__header {
+    margin-bottom: 0.875rem;
+}
+
+.bb-dashboard-library__title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin: 0 0 0.125rem 0;
+}
+
+.bb-dashboard-library__subtitle {
+    font-size: 0.8125rem;
+    color: #667085;
+    margin: 0;
+}
+
+.bb-dashboard-library__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.625rem;
+}
+
+.bb-dashboard-library__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    background: #F6FAFE;
+    border: 1px solid #E5EDF5;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+
+.bb-dashboard-library__item:hover {
+    background: #EAF3FB;
+    border-color: #1E88E5;
+}
+
+.bb-dashboard-library__item:active {
+    transform: translateY(1px);
+}
+
+.bb-dashboard-library__item-icon {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    color: #1E88E5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #DDEAF3;
+}
+
+.bb-dashboard-library__item-icon svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.bb-dashboard-library__item-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.bb-dashboard-library__item-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1a2332;
+    line-height: 1.2;
+}
+
+.bb-dashboard-library__item-desc {
+    font-size: 0.6875rem;
+    color: #667085;
+    line-height: 1.35;
+    margin-top: 0.125rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bb-dashboard-library__item-add {
+    width: 1.125rem;
+    height: 1.125rem;
+    color: #1E88E5;
+    flex-shrink: 0;
 }

@@ -13,7 +13,7 @@ class AddNoIndexHeaderForNonProdTest extends TestCase
     {
         $this->app['env'] = 'local';
 
-        $response = $this->get('/admin/login');
+        $response = $this->get('/login');
 
         $response->assertHeader('X-Robots-Tag', 'noindex, nofollow');
     }
@@ -22,7 +22,7 @@ class AddNoIndexHeaderForNonProdTest extends TestCase
     {
         $this->app['env'] = 'production';
 
-        $response = $this->get('/admin/login');
+        $response = $this->get('/login');
 
         $this->assertFalse($response->headers->has('X-Robots-Tag'));
     }

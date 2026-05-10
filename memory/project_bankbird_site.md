@@ -12,4 +12,4 @@ Added a full public website to the BankBird Laravel app (May 2026) with four pag
 
 **Why:** User wanted an online presence to showcase the app and help others install it from the GitHub repo.
 
-**How to apply:** Pages live in resources/views/ (welcome.blade.php, install.blade.php, docs.blade.php, demo.blade.php) and share resources/views/layouts/public.blade.php. Routes are in routes/web.php. Tailwind CSS is in resources/css/app.css (requires @import "tailwindcss"). Served at http://personal-myaccounting.test via Herd.
+**How to apply:** Pages live in resources/views/ (welcome.blade.php, install.blade.php, docs.blade.php, demo.blade.php) and share resources/views/layouts/public.blade.php. Routes are in routes/web.php. Tailwind CSS is in resources/css/app.css (requires @import "tailwindcss"). Served at http://bankbird.test via Herd.

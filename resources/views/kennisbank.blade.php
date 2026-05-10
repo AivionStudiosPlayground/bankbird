@@ -125,7 +125,9 @@
                                 @foreach([
                                     ['🏦', 'ING PDF', 'Bankafschrift als PDF'],
                                     ['🏦', 'ING CSV', 'Export via Mijn ING'],
-                                    ['🏦', 'Rabobank CSV', 'Binnenkort'],
+                                    ['🏦', 'SNS PDF', 'Transactie-historie als PDF'],
+                                    ['🏦', 'Knab PDF', 'Rekeningafschrift als PDF'],
+                                    ['🏦', 'Rabobank', 'Binnenkort'],
                                     ['🏦', 'ABN AMRO', 'Binnenkort'],
                                 ] as [$icon, $bank, $note])
                                 <div style="display:flex;align-items:center;gap:0.625rem;">
@@ -146,7 +148,7 @@
 
                     <div class="bb-alert bb-alert-orange">
                         <span style="font-size:1.25rem;flex-shrink:0;">⚠️</span>
-                        <div style="font-size:0.875rem;line-height:1.6;"><strong>Tip voor ING PDF:</strong> zorg dat je PDF niet beveiligd is met een wachtwoord. Sommige bank-apps sturen beveiligde PDFs; gebruik dan de CSV-export als alternatief.</div>
+                        <div style="font-size:0.875rem;line-height:1.6;"><strong>Tip voor PDF-imports:</strong> zorg dat de PDF niet beveiligd is met een wachtwoord. Sommige bank-apps leveren beveiligde PDFs; bij ING kun je de CSV-export als alternatief gebruiken.</div>
                     </div>
                 </div>
 

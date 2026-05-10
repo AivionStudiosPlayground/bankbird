@@ -13,23 +13,31 @@ class IncomeVsExpensesChart extends ApexChartWidget
 
     protected static ?string $heading = 'Inkomsten vs uitgaven (12 maanden)';
 
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 2;
 
     protected int|string|array $columnSpan = 'full';
 
+    public int $monthsRange = 12;
+
+    public function getHeading(): ?string
+    {
+        return 'Inkomsten vs uitgaven ('.$this->monthsRange.' maanden)';
+    }
+
     protected function getOptions(): array
     {
-        $labels   = [];
-        $income   = [];
+        $labels = [];
+        $income = [];
         $expenses = [];
+        $months = max(1, (int) $this->monthsRange);
 
-        for ($i = 11; $i >= 0; $i--) {
+        for ($i = $months - 1; $i >= 0; $i--) {
             $month = Carbon::now()->subMonths($i);
             $start = $month->copy()->startOfMonth();
-            $end   = $month->copy()->endOfMonth();
+            $end = $month->copy()->endOfMonth();
 
-            $labels[]   = $month->locale('nl')->translatedFormat('M Y');
-            $income[]   = (float) Transaction::where('type', 'credit')
+            $labels[] = $month->locale('nl')->translatedFormat('M Y');
+            $income[] = (float) Transaction::where('type', 'credit')
                 ->whereBetween('date', [$start, $end])
                 ->whereDoesntHave('category', fn ($q) => $q->where('name', 'Sparen'))
                 ->sum('amount');
@@ -41,10 +49,10 @@ class IncomeVsExpensesChart extends ApexChartWidget
 
         return [
             'chart' => [
-                'type'       => 'bar',
-                'height'     => 420,
-                'width'      => '100%',
-                'toolbar'    => ['show' => false],
+                'type' => 'bar',
+                'height' => 260,
+                'width' => '100%',
+                'toolbar' => ['show' => false],
                 'fontFamily' => 'inherit',
                 'animations' => ['enabled' => true, 'easing' => 'easeinout', 'speed' => 500],
             ],
@@ -53,36 +61,36 @@ class IncomeVsExpensesChart extends ApexChartWidget
                 ['name' => 'Uitgaven',  'data' => $expenses],
             ],
             'xaxis' => [
-                'categories'  => $labels,
-                'labels'      => ['rotate' => 0, 'style' => ['fontSize' => '12px']],
-                'axisBorder'  => ['show' => false],
-                'axisTicks'   => ['show' => false],
+                'categories' => $labels,
+                'labels' => ['rotate' => 0, 'style' => ['fontSize' => '12px']],
+                'axisBorder' => ['show' => false],
+                'axisTicks' => ['show' => false],
             ],
-            'colors'      => ['#22c55e', '#ef4444'],
-            'legend'      => [
-                'position'         => 'top',
-                'horizontalAlign'  => 'right',
-                'fontSize'         => '13px',
-                'markers'          => ['width' => 12, 'height' => 12, 'radius' => 12],
-                'itemMargin'       => ['horizontal' => 12],
+            'colors' => ['#22c55e', '#ef4444'],
+            'legend' => [
+                'position' => 'top',
+                'horizontalAlign' => 'right',
+                'fontSize' => '13px',
+                'markers' => ['width' => 12, 'height' => 12, 'radius' => 12],
+                'itemMargin' => ['horizontal' => 12],
             ],
             'grid' => [
-                'borderColor'        => 'rgba(148,163,184,0.15)',
-                'strokeDashArray'    => 4,
-                'xaxis'              => ['lines' => ['show' => false]],
-                'padding'            => ['left' => 10, 'right' => 10],
+                'borderColor' => 'rgba(148,163,184,0.15)',
+                'strokeDashArray' => 4,
+                'xaxis' => ['lines' => ['show' => false]],
+                'padding' => ['left' => 10, 'right' => 10],
             ],
             'plotOptions' => [
                 'bar' => [
-                    'borderRadius'        => 6,
+                    'borderRadius' => 4,
                     'borderRadiusApplication' => 'end',
-                    'columnWidth'         => '55%',
+                    'columnWidth' => '78%',
                 ],
             ],
-            'dataLabels'  => ['enabled' => false],
-            'fill'        => ['opacity' => 1],
-            'stroke'      => ['show' => true, 'width' => 2, 'colors' => ['transparent']],
-            'states'      => ['hover' => ['filter' => ['type' => 'lighten', 'value' => 0.05]]],
+            'dataLabels' => ['enabled' => false],
+            'fill' => ['opacity' => 1],
+            'stroke' => ['show' => true, 'width' => 2, 'colors' => ['transparent']],
+            'states' => ['hover' => ['filter' => ['type' => 'lighten', 'value' => 0.05]]],
         ];
     }
 

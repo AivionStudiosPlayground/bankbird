@@ -19,6 +19,7 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -44,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
 
     private function resolveLogoHeight(): string
     {
-        return rescue(fn () => AppSetting::current()->logo_height, '4rem', false) ?? '4rem';
+        return rescue(fn () => AppSetting::current()->logo_height, '5.5rem', false) ?? '5.5rem';
     }
 
     private function resolveFavicon(): ?string
@@ -71,6 +72,8 @@ class AdminPanelProvider extends PanelProvider
                 AppAuthentication::make()->recoverable(),
             ])
             ->darkMode(false)
+            ->topNavigation()
+            ->maxContentWidth(Width::Full)
             ->font('Inter')
             ->brandName('BankBird')
             ->brandLogo(fn () => $this->resolveBrandLogo())
@@ -95,6 +98,10 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::SIDEBAR_NAV_END,
                 fn () => view('partials.sidebar-footer'),
+            )
+            ->renderHook(
+                PanelsRenderHook::FOOTER,
+                fn () => view('partials.admin-footer'),
             )
             ->renderHook(
                 PanelsRenderHook::BODY_START,

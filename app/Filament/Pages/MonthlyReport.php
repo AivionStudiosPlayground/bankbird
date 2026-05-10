@@ -2,8 +2,9 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Pages\CategoryMerchants;
 use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -11,6 +12,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Url;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MonthlyReport extends Page implements HasForms
 {
@@ -77,12 +79,12 @@ class MonthlyReport extends Page implements HasForms
     public function getReportData(): array
     {
         $monthKey = $this->data['month'] ?? now()->format('Y-m');
-        $start    = Carbon::parse($monthKey . '-01')->startOfMonth();
-        $end      = $start->copy()->endOfMonth();
+        $start = Carbon::parse($monthKey.'-01')->startOfMonth();
+        $end = $start->copy()->endOfMonth();
 
-        $totalIncome   = Transaction::where('type', 'credit')->whereBetween('date', [$start, $end])->sum('amount');
+        $totalIncome = Transaction::where('type', 'credit')->whereBetween('date', [$start, $end])->sum('amount');
         $totalExpenses = Transaction::where('type', 'debit')->whereBetween('date', [$start, $end])->sum('amount');
-        $net           = $totalIncome - $totalExpenses;
+        $net = $totalIncome - $totalExpenses;
 
         $categoryBreakdown = Transaction::where('type', 'debit')
             ->whereBetween('date', [$start, $end])
@@ -94,12 +96,12 @@ class MonthlyReport extends Page implements HasForms
                 $amount = $group->sum('amount');
 
                 return [
-                    'id'         => $group->first()->category->id,
-                    'name'       => $group->first()->category->name,
-                    'color'      => $group->first()->category->color,
-                    'amount'     => $amount,
+                    'id' => $group->first()->category->id,
+                    'name' => $group->first()->category->name,
+                    'color' => $group->first()->category->color,
+                    'amount' => $amount,
                     'percentage' => $totalExpenses > 0 ? round(($amount / $totalExpenses) * 100, 1) : 0,
-                    'count'      => $group->count(),
+                    'count' => $group->count(),
                 ];
             })
             ->sortByDesc('amount')
@@ -111,8 +113,65 @@ class MonthlyReport extends Page implements HasForms
     public function goToCategory(int $id): void
     {
         $month = $this->data['month'] ?? now()->format('Y-m');
-        $url   = CategoryMerchants::getUrl() . '?' . http_build_query(['categoryId' => $id, 'month' => $month]);
+        $url = CategoryMerchants::getUrl().'?'.http_build_query(['categoryId' => $id, 'month' => $month]);
 
         $this->redirect($url, navigate: true);
+    }
+
+    /**
+     * @return array<int, Action>
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('downloadPdf')
+                ->label('Download PDF')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('primary')
+                ->action(fn () => $this->downloadPdf()),
+        ];
+    }
+
+    public function downloadPdf(): StreamedResponse
+    {
+        $report = $this->getReportData();
+
+        $monthLabel = $report['start']->locale('nl')->translatedFormat('F Y');
+        $filename = 'bankbird-maandrapport-'.$report['start']->format('Y-m').'.pdf';
+
+        $topMerchants = Transaction::where('type', 'debit')
+            ->whereBetween('date', [$report['start'], $report['end']])
+            ->whereNotNull('merchant_id')
+            ->with('merchant.category')
+            ->get()
+            ->groupBy('merchant_id')
+            ->map(fn ($group) => [
+                'name' => $group->first()->merchant->name,
+                'logo_url' => $group->first()->merchant->logo_url,
+                'category' => $group->first()->merchant->category?->name,
+                'category_color' => $group->first()->merchant->category?->color,
+                'amount' => $group->sum('amount'),
+                'count' => $group->count(),
+            ])
+            ->sortByDesc('amount')
+            ->take(10)
+            ->values();
+
+        $pdf = Pdf::loadView('pdf.monthly-report', [
+            'report' => $report,
+            'monthLabel' => $monthLabel,
+            'topMerchants' => $topMerchants,
+            'logoPath' => public_path('images/bankbird-logo.png'),
+            'generatedAt' => now()->locale('nl')->translatedFormat('j F Y, H:i'),
+            'version' => config('app.version'),
+        ])
+            ->setPaper('A4')
+            ->setOption('isPhpEnabled', true);
+
+        return response()->streamDownload(
+            fn () => print ($pdf->output()),
+            $filename,
+            ['Content-Type' => 'application/pdf'],
+        );
     }
 }

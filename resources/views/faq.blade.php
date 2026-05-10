@@ -219,7 +219,7 @@
                 <details class="bb-faq-item">
                     <summary>Welke banken worden ondersteund?</summary>
                     <div class="bb-faq-body">
-                        <p>Op dit moment volledig ondersteund: <strong>ING</strong> (PDF en CSV).</p>
+                        <p>Op dit moment volledig ondersteund: <strong>ING</strong> (PDF en CSV), <strong>SNS</strong> (PDF) en <strong>Knab</strong> (PDF).</p>
                         <p>In ontwikkeling: <strong>Rabobank</strong> en <strong>ABN AMRO</strong>. Andere Nederlandse en Europese banken kunnen toegevoegd worden — we kijken naar het volume aan vraag.</p>
                         <p>Mis je een bank? Open een issue op <a href="https://github.com/AivionStudiosPlayground/bankbird/issues" target="_blank" rel="noopener">GitHub</a>.</p>
                     </div>
@@ -303,15 +303,15 @@
                 <details class="bb-faq-item">
                     <summary>Hoe weet ik dat er een update beschikbaar is?</summary>
                     <div class="bb-faq-body">
-                        <p>Bij elke admin-pagina toont BankBird automatisch een oranje banner als een nieuwere versie op GitHub is uitgebracht. De banner linkt naar <code>/admin/updates</code> waar je de release notes kunt lezen en de update-prompt kunt kopiëren voor Claude of Codex.</p>
-                        <p>De huidige versie staat altijd onderaan in de sidebar — bijvoorbeeld <code>v1.0.0</code> — met een opvallend label als er een update klaar staat.</p>
+                        <p>Bij elke admin-pagina toont BankBird automatisch een oranje banner als een nieuwere versie op GitHub is uitgebracht. De banner linkt naar de <code>Updates</code>-pagina in het admin-paneel waar je de release notes kunt lezen en de update-prompt kunt kopiëren voor Claude of Codex.</p>
+                        <p>De huidige versie staat altijd onderaan in de page-footer — bijvoorbeeld <code>v{{ config('app.version') }}</code> — met een opvallend label als er een update klaar staat.</p>
                     </div>
                 </details>
                 <details class="bb-faq-item">
                     <summary>Hoe update ik BankBird?</summary>
                     <div class="bb-faq-body">
                         <p>Net als de installatie — open Claude Code of Codex CLI in je projectmap en geef de prompt: <em>"Update BankBird (https://github.com/AivionStudiosPlayground/bankbird) voor me."</em> De AI volgt het <code>End-user upgrade protocol</code> in <code>AGENTS.md</code>: backup van je database, code pullen, dependencies bijwerken, migraties draaien en smoke-test op de loginpagina.</p>
-                        <p>Wil je het zelf doen? Op de <code>/admin/updates</code> pagina staan de exacte commando's onder "Of handmatig (voor ontwikkelaars)".</p>
+                        <p>Wil je het zelf doen? Op de <code>Updates</code>-pagina in het admin-paneel staan de exacte commando's onder "Of handmatig (voor ontwikkelaars)".</p>
                     </div>
                 </details>
                 <details class="bb-faq-item">

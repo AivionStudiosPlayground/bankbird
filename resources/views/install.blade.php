@@ -282,7 +282,7 @@ function copyPrompt() {
                         <div class="bb-dot" style="background:#27C93F;"></div>
                         <span style="margin-left:auto;font-size:0.6875rem;color:rgba(255,255,255,0.3);font-family:monospace;">browser</span>
                     </div>
-                    <pre style="font-size:1rem;line-height:1.6;color:white;">http://bankbird.test/admin</pre>
+                    <pre style="font-size:1rem;line-height:1.6;color:white;">http://bankbird.test/</pre>
                 </div>
                 <div style="margin-top:1.25rem;" class="bb-alert bb-alert-green">
                     <span style="font-size:1.25rem;flex-shrink:0;">✨</span>
@@ -356,7 +356,7 @@ function copyPrompt() {
 <span class="tok-k">php</span> artisan make:filament-user</pre>
             </div>
             <p style="font-size:0.875rem;color:#6B7A99;line-height:1.6;margin:0 0 1rem;">
-                Zonder Herd start je de dev-server zelf met <code style="background:#EEF5FF;padding:0.1rem 0.4rem;border-radius:0.25rem;font-size:0.85em;color:#1565C0;">composer run dev</code> en open je <code style="background:#EEF5FF;padding:0.1rem 0.4rem;border-radius:0.25rem;font-size:0.85em;color:#1565C0;">http://127.0.0.1:8000/admin</code>. Let op: deze server moet je elke keer handmatig starten.
+                Zonder Herd start je de dev-server zelf met <code style="background:#EEF5FF;padding:0.1rem 0.4rem;border-radius:0.25rem;font-size:0.85em;color:#1565C0;">composer run dev</code> en open je <code style="background:#EEF5FF;padding:0.1rem 0.4rem;border-radius:0.25rem;font-size:0.85em;color:#1565C0;">http://127.0.0.1:8000/</code>. Let op: deze server moet je elke keer handmatig starten.
             </p>
             <div class="bb-alert bb-alert-orange">
                 <span style="font-size:1.125rem;flex-shrink:0;">⚠️</span>

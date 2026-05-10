@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Support\Demo;
 use Closure;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,6 +27,12 @@ class DemoMode
         if ($request->hasHeader('X-Livewire')) {
             return $next($request);
         }
+
+        Notification::make()
+            ->warning()
+            ->title('Niet beschikbaar in demo')
+            ->body('Aanmaken, bewerken en verwijderen zijn uitgeschakeld in de demo-omgeving.')
+            ->send();
 
         return redirect()->back();
     }

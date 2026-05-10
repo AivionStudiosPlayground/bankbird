@@ -14,9 +14,11 @@ class TopMerchantsThisMonth extends BaseWidget
 {
     use HasActiveMonth;
 
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 3;
 
-    protected int|string|array $columnSpan = 1;
+    protected int|string|array $columnSpan = 'full';
+
+    public int $maxItems = 10;
 
     public function getHeading(): string
     {
@@ -43,7 +45,7 @@ class TopMerchantsThisMonth extends BaseWidget
                     ->joinSub($stats, 'merchant_stats', fn ($join) => $join->on('merchants.id', '=', 'merchant_stats.merchant_id'))
                     ->select('merchants.*', 'merchant_stats.total_amount', 'merchant_stats.tx_count')
                     ->orderByDesc('merchant_stats.total_amount')
-                    ->limit(10)
+                    ->limit($this->maxItems)
             )
             ->columns([
                 ImageColumn::make('logo_url')

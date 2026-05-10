@@ -178,7 +178,7 @@
 
         <div class="bb-grid-3">
             @foreach([
-                ['images/icons/01.png', '#DBEAFE', 'Bankafschriften importeren', 'ING — upload je PDF of CSV en BankBird verwerkt alles automatisch. Rabobank en ABN AMRO volgen binnenkort.'],
+                ['images/icons/01.png', '#DBEAFE', 'Bankafschriften importeren', 'ING, SNS en Knab — upload je PDF of CSV en BankBird verwerkt alles automatisch. Rabobank en ABN AMRO volgen later.'],
                 ['images/icons/02.png', '#0F1E35', 'AI doet het denkwerk',       'Claude of GPT categoriseert je transacties razendsnel. Leert van jouw feedback en wordt elke dag slimmer.'],
                 ['images/icons/03.png', '#12182E', 'Slimme merchant herkenning', 'BankBird leert welke winkels bij welke categorie horen. Eén keer instellen, altijd goed.'],
                 ['images/icons/04.png', '#D1FAE5', 'Mooie rapporten',            'Maandoverzichten, jaaroverzichten, uitgavenpatronen. Alles in één oogopslag duidelijk.'],
@@ -233,7 +233,7 @@
                 <div style="display:flex;flex-direction:column;gap:2rem;">
                     @foreach([
                         ['1', '#EEF5FF', '#1E88E5', 'Vraag Claude of Codex', 'Eén prompt — de AI installeert BankBird voor je via Laravel Herd. Geen technische kennis nodig, vijf minuten klaar.'],
-                        ['2', '#F0FFF8', '#16C784', 'Importeer je bankafschrift', 'Upload je PDF of CSV van ING, Rabobank, ABN of een ander formaat. BankBird leest alles automatisch uit.'],
+                        ['2', '#F0FFF8', '#16C784', 'Importeer je bankafschrift', 'Upload je PDF of CSV van ING, SNS of Knab. BankBird leest alles automatisch uit; meer banken volgen.'],
                         ['3', '#FFF8F0', '#FF8A3D', 'Geniet van het overzicht', 'AI categoriseert je transacties, je ziet mooie rapporten en hebt eindelijk rust over je financiën.'],
                     ] as [$num, $bg, $color, $title, $desc])
                     <div style="display:flex;gap:1.25rem;align-items:flex-start;">
@@ -308,5 +308,60 @@
         </div>
     </div>
 </section>
+
+{{-- Compatibel met — alleen logos, transparant default, 100% bij hover --}}
+<section style="background:white;padding:4rem 1.5rem;">
+    <div class="bb-wrap" style="text-align:center;">
+        <div class="bb-supported-label reveal">Compatibel met</div>
+        <div class="bb-supported-sub reveal">Banken en AI-tools die BankBird ondersteunt — geen officiële samenwerking</div>
+        <div class="bb-supported-logos reveal">
+            <img src="{{ asset('images/banks/ing-logo.svg') }}" alt="ING" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/knab-logo.svg') }}" alt="Knab" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/sns-logo.svg') }}" alt="SNS" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/codex-logo.jpg') }}" alt="Codex" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/claude-ai-icon.svg') }}" alt="Claude" class="bb-supported-logo">
+        </div>
+    </div>
+</section>
+
+<style>
+    .bb-supported-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #6B7A99;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        margin-bottom: 0.4rem;
+    }
+    .bb-supported-sub {
+        font-size: 0.75rem;
+        color: #94A3B8;
+        font-weight: 500;
+        margin-bottom: 2rem;
+    }
+    .bb-supported-logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
+    }
+    .bb-supported-logo {
+        height: 2.75rem;
+        width: auto;
+        opacity: 0.4;
+        filter: grayscale(30%);
+        transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+    }
+    .bb-supported-logo:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+        transform: scale(1.05);
+    }
+    @media (max-width: 640px) {
+        .bb-supported-logos { gap: 2rem; }
+        .bb-supported-logo { height: 2rem; }
+    }
+</style>
 
 @endsection

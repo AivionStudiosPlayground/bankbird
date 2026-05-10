@@ -24,6 +24,27 @@ class MerchantResource extends Resource
 
     protected static ?string $model = Merchant::class;
 
+    protected static ?string $recordTitleAttribute = 'name';
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'normalized_name'];
+    }
+
+    /**
+     * @param  Merchant  $record
+     * @return array<string, string>
+     */
+    public static function getGlobalSearchResultDetails($record): array
+    {
+        return array_filter([
+            'Categorie' => $record->category?->name,
+        ]);
+    }
+
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-building-storefront';

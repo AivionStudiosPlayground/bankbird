@@ -13,6 +13,7 @@ if (Demo::isMarketingSite()) {
     }
 
     Route::get('/updates', fn () => view('updates'));
+    Route::get('/updates/technisch', fn () => view('updates-technisch'))->name('updates.technisch');
     Route::get('/kennisbank', fn () => view('kennisbank'));
     Route::get('/vibe-dev', fn () => view('vibe-dev'));
     Route::get('/over', fn () => view('over'));

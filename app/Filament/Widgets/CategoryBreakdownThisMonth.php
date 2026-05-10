@@ -19,14 +19,14 @@ class CategoryBreakdownThisMonth extends ApexChartWidget
 
     public function getHeading(): ?string
     {
-        return 'Uitgaven per categorie — ' . $this->activeMonth()->locale('nl')->translatedFormat('F Y');
+        return 'Uitgaven per categorie — '.$this->activeMonth()->locale('nl')->translatedFormat('F Y');
     }
 
     protected function getOptions(): array
     {
         $month = $this->activeMonth();
         $start = $month->copy()->startOfMonth();
-        $end   = $month->copy()->endOfMonth();
+        $end = $month->copy()->endOfMonth();
 
         $rows = Transaction::query()
             ->where('type', 'debit')
@@ -37,18 +37,18 @@ class CategoryBreakdownThisMonth extends ApexChartWidget
             ->get()
             ->groupBy('category_id')
             ->map(fn ($group) => [
-                'name'   => $group->first()->category->name,
+                'name' => $group->first()->category->name,
                 'amount' => round($group->sum('amount'), 2),
-                'color'  => $group->first()->category->color,
+                'color' => $group->first()->category->color,
             ])
             ->sortByDesc('amount')
             ->values();
 
-        $height = max(360, $rows->count() * 55 + 80);
+        $height = max(220, $rows->count() * 32 + 60);
 
         if ($rows->isEmpty()) {
             return [
-                'chart'  => ['type' => 'bar', 'height' => 360, 'width' => '100%'],
+                'chart' => ['type' => 'bar', 'height' => 360, 'width' => '100%'],
                 'series' => [],
                 'noData' => ['text' => 'Geen uitgaven in deze maand', 'style' => ['fontSize' => '14px']],
             ];
@@ -56,47 +56,47 @@ class CategoryBreakdownThisMonth extends ApexChartWidget
 
         return [
             'chart' => [
-                'type'       => 'bar',
-                'height'     => $height,
-                'width'      => '100%',
-                'toolbar'    => ['show' => false],
+                'type' => 'bar',
+                'height' => $height,
+                'width' => '100%',
+                'toolbar' => ['show' => false],
                 'fontFamily' => 'inherit',
                 'animations' => ['enabled' => true, 'easing' => 'easeinout', 'speed' => 500],
             ],
             'plotOptions' => [
                 'bar' => [
-                    'horizontal'              => true,
-                    'borderRadius'            => 6,
+                    'horizontal' => true,
+                    'borderRadius' => 4,
                     'borderRadiusApplication' => 'end',
-                    'distributed'             => true,
-                    'barHeight'               => '60%',
-                    'dataLabels'              => ['position' => 'bottom'],
+                    'distributed' => true,
+                    'barHeight' => '70%',
+                    'dataLabels' => ['position' => 'top'],
                 ],
             ],
-            'dataLabels'  => [
-                'enabled'  => true,
+            'dataLabels' => [
+                'enabled' => true,
                 'textAnchor' => 'start',
-                'offsetX'  => 8,
-                'style'    => ['fontSize' => '12px', 'fontWeight' => 600, 'colors' => ['#fff']],
+                'offsetX' => 8,
+                'style' => ['fontSize' => '11px', 'fontWeight' => 600, 'colors' => ['#1a2332']],
             ],
-            'series'      => [['name' => 'Uitgaven', 'data' => $rows->pluck('amount')->toArray()]],
-            'xaxis'       => [
+            'series' => [['name' => 'Uitgaven', 'data' => $rows->pluck('amount')->toArray()]],
+            'xaxis' => [
                 'categories' => $rows->pluck('name')->toArray(),
                 'axisBorder' => ['show' => false],
-                'axisTicks'  => ['show' => false],
+                'axisTicks' => ['show' => false],
             ],
             'yaxis' => [
                 'labels' => ['style' => ['fontSize' => '12px']],
             ],
-            'colors'      => $rows->pluck('color')->toArray(),
-            'legend'      => ['show' => false],
-            'grid'        => [
-                'borderColor'      => 'rgba(148,163,184,0.15)',
-                'strokeDashArray'  => 4,
-                'yaxis'            => ['lines' => ['show' => false]],
-                'padding'          => ['left' => 10, 'right' => 10],
+            'colors' => $rows->pluck('color')->toArray(),
+            'legend' => ['show' => false],
+            'grid' => [
+                'borderColor' => 'rgba(148,163,184,0.15)',
+                'strokeDashArray' => 4,
+                'yaxis' => ['lines' => ['show' => false]],
+                'padding' => ['left' => 10, 'right' => 10],
             ],
-            'fill'   => ['opacity' => 1],
+            'fill' => ['opacity' => 1],
             'stroke' => ['show' => false],
         ];
     }

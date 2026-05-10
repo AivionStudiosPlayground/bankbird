@@ -84,7 +84,7 @@ class ViewImport extends Page implements HasTable
                 ->modalHeading('AI categorisatie starten')
                 ->modalDescription(
                     'Alle ongecategoriseerde transacties van deze import worden automatisch gecategoriseerd. '
-                    . 'Uw transactiegegevens worden verstuurd naar externe servers (Anthropic of OpenAI).'
+                    .'Uw transactiegegevens worden verstuurd naar externe servers (Anthropic of OpenAI).'
                 )
                 ->visible($aiService->isEnabled())
                 ->action(function () {
@@ -105,6 +105,9 @@ class ViewImport extends Page implements HasTable
 
                     $this->resetTable();
                 }),
+
+            ImportResource::deleteAction(ListImports::getUrl())
+                ->record($this->getRecord()),
 
             Action::make('back')
                 ->label('Terug naar overzicht')

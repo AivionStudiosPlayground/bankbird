@@ -31,6 +31,31 @@ class TransactionResource extends Resource
 
     protected static ?string $model = Transaction::class;
 
+    protected static ?string $recordTitleAttribute = 'description';
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['description', 'raw_description', 'counterpart_iban'];
+    }
+
+    /**
+     * @param  Transaction  $record
+     * @return array<string, string>
+     */
+    public static function getGlobalSearchResultDetails($record): array
+    {
+        $sign = $record->type === TransactionType::Credit ? '+' : '-';
+
+        return array_filter([
+            'Datum' => optional($record->date)->format('d-m-Y'),
+            'Bedrag' => $sign.' € '.number_format((float) $record->amount, 2, ',', '.'),
+            'Categorie' => $record->category?->name,
+        ]);
+    }
+
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-list-bullet';
@@ -120,6 +145,16 @@ class TransactionResource extends Resource
                     ->date('d-m-Y')
                     ->sortable(),
 
+                ImageColumn::make('account.bank_logo_url')
+                    ->label('Bank')
+                    ->disk(null)
+                    ->imageHeight(24)
+                    ->square()
+                    ->extraImgAttributes(fn (Transaction $record): array => [
+                        'class' => 'object-contain',
+                        'title' => $record->account?->bank_name ?? '—',
+                    ]),
+
                 TextColumn::make('account.name')
                     ->label('Rekening')
                     ->badge()
@@ -172,6 +207,22 @@ class TransactionResource extends Resource
                 SelectFilter::make('type')
                     ->label('Type')
                     ->options(TransactionType::class),
+
+                SelectFilter::make('merchant_id')
+                    ->label('Merchant')
+                    ->relationship('merchant', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                Filter::make('counterpart_iban')
+                    ->label('Tegenrekening')
+                    ->form([
+                        TextInput::make('counterpart_iban')->label('IBAN'),
+                    ])
+                    ->query(fn (Builder $query, array $data): Builder => $query->when(
+                        $data['counterpart_iban'] ?? null,
+                        fn ($q, $v) => $q->where('counterpart_iban', $v)
+                    )),
 
                 Filter::make('date_range')
                     ->label('Datumbereik')

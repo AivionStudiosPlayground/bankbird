@@ -50,7 +50,7 @@
                         <div style="width:11px;height:11px;background:#FF6058;border-radius:50%;"></div>
                         <div style="width:11px;height:11px;background:#FFBD2E;border-radius:50%;"></div>
                         <div style="width:11px;height:11px;background:#27C93F;border-radius:50%;"></div>
-                        <div style="flex:1;background:white;border-radius:0.375rem;padding:0.25rem 0.75rem;font-size:0.75rem;color:#6B7A99;margin:0 0.5rem;max-width:300px;">localhost:8000/admin/dashboard</div>
+                        <div style="flex:1;background:white;border-radius:0.375rem;padding:0.25rem 0.75rem;font-size:0.75rem;color:#6B7A99;margin:0 0.5rem;max-width:300px;">localhost:8000/dashboard</div>
                     </div>
                     {{-- App layout --}}
                     <div style="display:grid;grid-template-columns:200px 1fr;min-height:400px;">
@@ -125,7 +125,7 @@
                         <div style="width:11px;height:11px;background:#FF6058;border-radius:50%;"></div>
                         <div style="width:11px;height:11px;background:#FFBD2E;border-radius:50%;"></div>
                         <div style="width:11px;height:11px;background:#27C93F;border-radius:50%;"></div>
-                        <div style="flex:1;background:white;border-radius:0.375rem;padding:0.25rem 0.75rem;font-size:0.75rem;color:#6B7A99;margin:0 0.5rem;max-width:300px;">localhost:8000/admin/transactions</div>
+                        <div style="flex:1;background:white;border-radius:0.375rem;padding:0.25rem 0.75rem;font-size:0.75rem;color:#6B7A99;margin:0 0.5rem;max-width:300px;">localhost:8000/transactions</div>
                     </div>
                     <div style="padding:1.25rem;">
                         {{-- Filter bar --}}
@@ -176,11 +176,11 @@
                         <div style="border:2px dashed rgba(30,136,229,0.3);border-radius:1rem;padding:2.5rem;background:#F7FBFF;margin-bottom:1.25rem;">
                             <div style="font-size:2.5rem;margin-bottom:0.75rem;">📄</div>
                             <div style="font-size:0.9375rem;font-weight:700;color:#0B1F3A;margin-bottom:0.375rem;">Sleep je bankafschrift hier</div>
-                            <div style="font-size:0.8125rem;color:#6B7A99;margin-bottom:1rem;">PDF of CSV — ING (meer banken volgen binnenkort)</div>
+                            <div style="font-size:0.8125rem;color:#6B7A99;margin-bottom:1rem;">PDF of CSV — ING, SNS of Knab</div>
                             <div style="display:inline-flex;background:#1E88E5;color:white;border-radius:0.625rem;padding:0.5rem 1.25rem;font-size:0.875rem;font-weight:700;">Bestand kiezen</div>
                         </div>
                         <div style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;">
-                            @foreach(['ING PDF' => true, 'ING CSV' => true, 'Rabobank CSV' => false, 'ABN AMRO' => false] as $format => $supported)
+                            @foreach(['ING PDF' => true, 'ING CSV' => true, 'SNS PDF' => true, 'Knab PDF' => true, 'Rabobank' => false, 'ABN AMRO' => false] as $format => $supported)
                             @if($supported)
                             <span style="font-size:0.75rem;background:#EEF5FF;color:#1E88E5;border:1px solid rgba(30,136,229,0.2);padding:0.2rem 0.625rem;border-radius:99px;font-weight:600;">{{ $format }}</span>
                             @else

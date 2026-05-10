@@ -21,6 +21,16 @@ class CategoryResource extends Resource
 
     protected static ?string $model = Category::class;
 
+    protected static ?string $recordTitleAttribute = 'name';
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-tag';

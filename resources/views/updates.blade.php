@@ -35,11 +35,29 @@
     <div class="bb-wrap">
 
         {{-- Versie badge --}}
-        <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+        <div style="text-align:center;margin-bottom:2rem;" class="reveal">
             <div style="display:inline-flex;align-items:center;gap:0.75rem;background:white;border:1px solid rgba(30,136,229,0.15);border-radius:99px;padding:0.5rem 1.25rem 0.5rem 0.75rem;box-shadow:0 4px 16px rgba(30,136,229,0.08);">
-                <span style="background:#16C784;color:white;font-size:0.6875rem;font-weight:800;padding:0.2rem 0.625rem;border-radius:99px;text-transform:uppercase;letter-spacing:0.06em;">v0.1 — Actueel</span>
-                <span style="font-size:0.875rem;color:#6B7A99;font-weight:500;">Laatste update: mei 2026</span>
+                <span style="background:#16C784;color:white;font-size:0.6875rem;font-weight:800;padding:0.2rem 0.625rem;border-radius:99px;text-transform:uppercase;letter-spacing:0.06em;">v{{ config('app.version') }} — Actueel</span>
+                <span style="font-size:0.875rem;color:#6B7A99;font-weight:500;">Laatste update: {{ \Carbon\Carbon::parse(config('app.release_date'))->locale('nl')->translatedFormat('F Y') }}</span>
             </div>
+        </div>
+
+        {{-- Geavanceerde update card --}}
+        <div style="max-width:640px;margin:0 auto 3rem;" class="reveal">
+            <a href="{{ route('updates.technisch') }}" style="display:block;background:linear-gradient(135deg,#FFF3E0,#FFE9D1);border:1px solid rgba(255,138,61,0.25);border-radius:1.25rem;padding:1.25rem 1.5rem;text-decoration:none;color:inherit;box-shadow:0 4px 16px rgba(255,138,61,0.1);transition:transform 0.18s,box-shadow 0.18s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(255,138,61,0.18)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(255,138,61,0.1)'">
+                <div style="display:flex;align-items:center;gap:1rem;">
+                    <div style="width:2.75rem;height:2.75rem;background:linear-gradient(135deg,#FF8A3D,#E65100);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;box-shadow:0 4px 12px rgba(255,138,61,0.3);">⚙️</div>
+                    <div style="flex:1;">
+                        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem;flex-wrap:wrap;">
+                            <span style="font-size:0.65rem;font-weight:800;color:#BF360C;text-transform:uppercase;letter-spacing:0.08em;background:white;padding:0.15rem 0.5rem;border-radius:99px;">Geavanceerde update</span>
+                            <span style="font-size:0.65rem;font-weight:700;color:#BF360C;text-transform:uppercase;letter-spacing:0.08em;">Vereist actie</span>
+                        </div>
+                        <div style="font-size:1rem;font-weight:800;color:#0B1F3A;margin-bottom:0.25rem;">Kritieke updates voor selfhost installs</div>
+                        <div style="font-size:0.8125rem;color:#6B7A99;line-height:1.5;">Technische uitleg over de databasewissel-middleware, demo-mode-fallbacks en sessie-isolatie. Lees dit voor je je instance bijwerkt.</div>
+                    </div>
+                    <div style="font-size:1.25rem;color:#FF8A3D;flex-shrink:0;">→</div>
+                </div>
+            </a>
         </div>
 
         <div class="bb-grid-2" style="align-items:start;">
@@ -50,7 +68,7 @@
                     <div style="width:2.5rem;height:2.5rem;background:linear-gradient(135deg,#16C784,#0A9660);border-radius:0.875rem;display:flex;align-items:center;justify-content:center;font-size:1.125rem;box-shadow:0 4px 12px rgba(22,199,132,0.3);">✅</div>
                     <div>
                         <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#0B1F3A;">Wat er nu in zit</h2>
-                        <p style="font-size:0.8125rem;color:#6B7A99;margin:0;">Volledig werkend in v0.1</p>
+                        <p style="font-size:0.8125rem;color:#6B7A99;margin:0;">Volledig werkend in v{{ config('app.version') }}</p>
                     </div>
                 </div>
 
@@ -65,6 +83,9 @@
                             @foreach([
                                 'ING — PDF import',
                                 'ING — CSV import',
+                                'SNS — PDF import',
+                                'Knab — PDF import',
+                                'Automatische bankdetectie bij PDF-upload',
                             ] as $item)
                             <div style="display:flex;align-items:center;gap:0.625rem;">
                                 <span style="color:#16C784;font-size:1rem;flex-shrink:0;">✓</span>
@@ -129,6 +150,8 @@
                                 'Merchantbeheer',
                                 'Importgeschiedenis',
                                 'Volledige back-up & herstel',
+                                'Vriendelijke 404 & 403 foutpagina\'s',
+                                'Demo-modus met duidelijke read-only meldingen',
                             ] as $item)
                             <div style="display:flex;align-items:center;gap:0.625rem;">
                                 <span style="color:#16C784;font-size:1rem;flex-shrink:0;">✓</span>
@@ -182,11 +205,10 @@
                     <div style="background:white;border:1px solid rgba(30,136,229,0.15);border-radius:1.25rem;overflow:hidden;">
                         <div style="background:#EEF5FF;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(30,136,229,0.1);display:flex;align-items:center;justify-content:space-between;">
                             <span style="font-size:0.75rem;font-weight:800;color:#1565C0;text-transform:uppercase;letter-spacing:0.07em;">📋 Gepland</span>
-                            <span style="font-size:0.6875rem;background:#1E88E5;color:white;padding:0.15rem 0.5rem;border-radius:99px;font-weight:700;">v0.2 — v0.3</span>
+                            <span style="font-size:0.6875rem;background:#1E88E5;color:white;padding:0.15rem 0.5rem;border-radius:99px;font-weight:700;">v2.1 — v3.0</span>
                         </div>
                         <div style="padding:1rem 1.25rem;display:flex;flex-direction:column;gap:0.875rem;">
                             @foreach([
-                                ['🏦', 'KNAB import', 'Ondersteuning voor KNAB bankafschriften'],
                                 ['🏦', 'Bunq import', 'Koppeling met Bunq exportformaat'],
                                 ['📤', 'Excel export', 'Exporteer naar .xlsx voor uitgebreide analyse'],
                                 ['🔁', 'Terugkerende transacties', 'Herken en markeer automatische incasso\'s en abonnementen'],
@@ -227,6 +249,119 @@
                     </div>
 
                 </div>
+            </div>
+        </div>
+
+        {{-- ══ GEAVANCEERDE UPDATES — afhankelijkheden & beveiligings-advisories ══ --}}
+        @php
+            $advisories = [
+                [
+                    'id' => 'vite-esbuild-2026-05',
+                    'title' => 'Vite & esbuild — beveiligings-update voor de build-tools',
+                    'severity' => 'moderate',
+                    'status' => 'fixed',
+                    'date' => 'mei 2026',
+                    'summary' => 'Twee gereedschappen die BankBird gebruikt om CSS en JavaScript te bouwen — Vite en esbuild — hadden een lek in hun lokale ontwikkel-server. Dit lek raakte alleen ontwikkelaars die `npm run dev` draaien, niet bezoekers van een live BankBird-installatie.',
+                    'impact' => 'Klein voor draaiende installaties. BankBird wordt in productie geserveerd vanuit een vooraf gebouwde versie (`npm run build`) waarin de kwetsbare ontwikkel-server niet aanwezig is.',
+                    'recommendation' => 'Opgelost: Vite is bijgewerkt van 5.x naar 6.x (kleine sprong, lost beide adviezen op). `npm audit` toont nu 0 kwetsbaarheden.',
+                    'dev_commands' => "# Toegepaste upgrade (Vite 5 → 6)\nnpm install --save-dev vite@^6 laravel-vite-plugin@^1.2\nnpm run build\nnpm audit  # 0 vulnerabilities",
+                    'references' => [
+                        ['label' => 'GHSA-4w7w-66w2-5vf9 — Vite path traversal', 'url' => 'https://github.com/advisories/GHSA-4w7w-66w2-5vf9'],
+                        ['label' => 'GHSA-67mh-4wv8-2f99 — esbuild dev server', 'url' => 'https://github.com/advisories/GHSA-67mh-4wv8-2f99'],
+                    ],
+                ],
+            ];
+
+            $severityMeta = [
+                'critical' => ['label' => 'Kritiek',    'bg' => '#FEE2E2', 'fg' => '#991B1B', 'border' => '#FCA5A5'],
+                'high'     => ['label' => 'Hoog',       'bg' => '#FFEDD5', 'fg' => '#9A3412', 'border' => '#FDBA74'],
+                'moderate' => ['label' => 'Gemiddeld',  'bg' => '#FEF3C7', 'fg' => '#92400E', 'border' => '#FCD34D'],
+                'low'      => ['label' => 'Laag',       'bg' => '#E0F2FE', 'fg' => '#075985', 'border' => '#7DD3FC'],
+            ];
+
+            $statusMeta = [
+                'open'        => ['label' => 'Openstaand',     'bg' => '#FFF3E0', 'fg' => '#BF360C', 'border' => '#FDBA74'],
+                'in_progress' => ['label' => 'In behandeling', 'bg' => '#EEF5FF', 'fg' => '#1565C0', 'border' => '#90CAF9'],
+                'fixed'       => ['label' => 'Opgelost',       'bg' => '#F0FFF8', 'fg' => '#0A9660', 'border' => '#9EEACB'],
+            ];
+        @endphp
+
+        <div style="margin-top:4rem;" class="reveal">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">
+                <div style="width:2.5rem;height:2.5rem;background:linear-gradient(135deg,#7C3AED,#5B21B6);border-radius:0.875rem;display:flex;align-items:center;justify-content:center;font-size:1.125rem;box-shadow:0 4px 12px rgba(124,58,237,0.3);">🛡️</div>
+                <div>
+                    <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#0B1F3A;">Geavanceerde updates</h2>
+                    <p style="font-size:0.8125rem;color:#6B7A99;margin:0;">Adviezen voor onderliggende afhankelijkheden — geen BankBird-releases, wel zaken om bij gelegenheid op te pakken</p>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">
+                @foreach ($advisories as $advisory)
+                    @php
+                        $sev = $severityMeta[$advisory['severity']] ?? $severityMeta['moderate'];
+                        $stat = $statusMeta[$advisory['status']] ?? $statusMeta['open'];
+                    @endphp
+                    <article style="background:white;border:1px solid rgba(124,58,237,0.15);border-radius:1.25rem;overflow:hidden;box-shadow:0 2px 12px rgba(11,31,58,0.05);">
+
+                        {{-- Header: titel + badges --}}
+                        <header style="padding:1rem 1.25rem;background:linear-gradient(135deg,#F5F0FF,#FAF7FF);border-bottom:1px solid rgba(124,58,237,0.1);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+                            <div style="flex:1;min-width:240px;">
+                                <h3 style="font-size:1rem;font-weight:800;color:#0B1F3A;margin:0 0 0.25rem;line-height:1.35;">{{ $advisory['title'] }}</h3>
+                                <div style="font-size:0.75rem;color:#6B7A99;">{{ $advisory['date'] }}</div>
+                            </div>
+                            <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">
+                                <span style="font-size:0.6875rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:99px;background:{{ $sev['bg'] }};color:{{ $sev['fg'] }};border:1px solid {{ $sev['border'] }};text-transform:uppercase;letter-spacing:0.05em;">{{ $sev['label'] }}</span>
+                                <span style="font-size:0.6875rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:99px;background:{{ $stat['bg'] }};color:{{ $stat['fg'] }};border:1px solid {{ $stat['border'] }};text-transform:uppercase;letter-spacing:0.05em;">{{ $stat['label'] }}</span>
+                            </div>
+                        </header>
+
+                        {{-- Body --}}
+                        <div style="padding:1.25rem;display:flex;flex-direction:column;gap:1rem;">
+
+                            <div>
+                                <div style="font-size:0.6875rem;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Wat speelt er?</div>
+                                <p style="font-size:0.9375rem;color:#0B1F3A;line-height:1.65;margin:0;">{{ $advisory['summary'] }}</p>
+                            </div>
+
+                            <div>
+                                <div style="font-size:0.6875rem;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Impact voor BankBird</div>
+                                <p style="font-size:0.9375rem;color:#0B1F3A;line-height:1.65;margin:0;">{{ $advisory['impact'] }}</p>
+                            </div>
+
+                            <div>
+                                <div style="font-size:0.6875rem;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.4rem;">Aanbeveling</div>
+                                <p style="font-size:0.9375rem;color:#0B1F3A;line-height:1.65;margin:0;">{{ $advisory['recommendation'] }}</p>
+                            </div>
+
+                            @if (! empty($advisory['dev_commands']))
+                                <details style="border:1px solid #E5E7EB;border-radius:0.75rem;overflow:hidden;background:#FAFAFA;">
+                                    <summary style="cursor:pointer;padding:0.75rem 1rem;font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.06em;list-style:none;display:flex;align-items:center;gap:0.5rem;user-select:none;">
+                                        <span>▶</span>
+                                        Voor ontwikkelaars — commando's
+                                    </summary>
+                                    <pre style="margin:0;padding:1rem 1.25rem;background:#0B1F3A;color:#E5E7EB;font-size:0.8125rem;line-height:1.6;overflow-x:auto;font-family:'SF Mono','Monaco','Consolas',monospace;border-top:1px solid #E5E7EB;"><code>{{ $advisory['dev_commands'] }}</code></pre>
+                                </details>
+                            @endif
+
+                            @if (! empty($advisory['references']))
+                                <div>
+                                    <div style="font-size:0.6875rem;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem;">Bronnen</div>
+                                    <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.375rem;">
+                                        @foreach ($advisory['references'] as $reference)
+                                            <li>
+                                                <a href="{{ $reference['url'] }}" target="_blank" rel="noopener" style="font-size:0.875rem;color:#1565C0;text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;">
+                                                    {{ $reference['label'] }}
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                        </div>
+                    </article>
+                @endforeach
             </div>
         </div>
 

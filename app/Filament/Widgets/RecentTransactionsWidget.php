@@ -13,9 +13,11 @@ class RecentTransactionsWidget extends BaseWidget
 {
     protected static ?string $heading = 'Laatste transacties';
 
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 6;
 
     protected int|string|array $columnSpan = 'full';
+
+    public int $maxItems = 6;
 
     public function table(Table $table): Table
     {
@@ -24,32 +26,24 @@ class RecentTransactionsWidget extends BaseWidget
                 Transaction::query()
                     ->orderByDesc('date')
                     ->orderByDesc('id')
-                    ->limit(10)
+                    ->limit($this->maxItems)
             )
             ->columns([
                 TextColumn::make('date')
                     ->label('Datum')
                     ->date('d-m-Y'),
 
-                TextColumn::make('account.name')
-                    ->label('Rekening')
-                    ->badge()
-                    ->color('primary'),
-
-                TextColumn::make('description')
-                    ->label('Omschrijving')
-                    ->limit(45),
-
                 ImageColumn::make('merchant.logo_url')
                     ->label('')
-                    ->imageHeight(24)
+                    ->disk(null)
+                    ->imageHeight(20)
                     ->square()
                     ->extraImgAttributes(['class' => 'object-contain'])
                     ->grow(false),
 
-                TextColumn::make('merchant.name')
-                    ->label('Merchant')
-                    ->placeholder('—'),
+                TextColumn::make('description')
+                    ->label('Omschrijving')
+                    ->limit(40),
 
                 TextColumn::make('category.name')
                     ->label('Categorie')
