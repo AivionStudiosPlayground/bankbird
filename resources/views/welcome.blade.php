@@ -315,10 +315,10 @@
         <div class="bb-supported-label reveal">Compatibel met</div>
         <div class="bb-supported-sub reveal">Banken en AI-tools die BankBird ondersteunt — geen officiële samenwerking</div>
         <div class="bb-supported-logos reveal">
-            <img src="{{ asset('images/banks/ing-logo.svg') }}" alt="ING" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/ing-logo.png') }}" alt="ING" class="bb-supported-logo">
             <img src="{{ asset('images/banks/knab-logo.svg') }}" alt="Knab" class="bb-supported-logo">
             <img src="{{ asset('images/banks/sns-logo.svg') }}" alt="SNS" class="bb-supported-logo">
-            <img src="{{ asset('images/banks/codex-logo.jpg') }}" alt="Codex" class="bb-supported-logo">
+            <img src="{{ asset('images/banks/codex-logo.webp') }}" alt="Codex" class="bb-supported-logo">
             <img src="{{ asset('images/banks/claude-ai-icon.svg') }}" alt="Claude" class="bb-supported-logo">
         </div>
     </div>

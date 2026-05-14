@@ -183,17 +183,37 @@ class DashboardWidgetRegistry
     /**
      * Default-layout zoals een verse gebruiker hem ziet.
      *
+     * Volgorde, span, zichtbaarheid en option-overrides zijn hier expliciet
+     * vastgelegd; de spec-defaults in `all()` blijven van toepassing wanneer
+     * een widget niet in deze layout voorkomt (dan valt-ie terug op de spec).
+     *
      * @return array<int, array{id: string, hidden: bool, span: int, options: array<string, mixed>}>
      */
     public static function defaultLayout(): array
     {
-        return collect(self::all())
-            ->filter(fn (array $spec) => $spec['inDefaultLayout'])
-            ->map(fn (array $spec) => [
-                'id' => $spec['id'],
-                'hidden' => false,
-                'span' => (int) $spec['defaultSpan'],
-                'options' => $spec['defaultOptions'],
+        $template = [
+            ['id' => 'welcome', 'hidden' => false, 'span' => 2, 'options' => []],
+            ['id' => 'account-stats', 'hidden' => false, 'span' => 2, 'options' => []],
+            ['id' => 'income-vs-expenses', 'hidden' => true, 'span' => 2, 'options' => ['monthsRange' => 12]],
+            ['id' => 'top-merchants', 'hidden' => false, 'span' => 3, 'options' => ['maxItems' => 3]],
+            ['id' => 'category-breakdown', 'hidden' => true, 'span' => 2, 'options' => []],
+            ['id' => 'recurring-income', 'hidden' => false, 'span' => 3, 'options' => ['maxItems' => 7]],
+            ['id' => 'recent-transactions', 'hidden' => false, 'span' => 3, 'options' => ['maxItems' => 3]],
+            ['id' => 'recurring-expenses', 'hidden' => false, 'span' => 1, 'options' => ['maxItems' => 7]],
+        ];
+
+        $specs = self::all();
+
+        return collect($template)
+            ->filter(fn (array $entry) => isset($specs[$entry['id']]))
+            ->map(fn (array $entry) => [
+                'id' => $entry['id'],
+                'hidden' => $entry['hidden'],
+                'span' => $entry['span'],
+                'options' => array_merge(
+                    $specs[$entry['id']]['defaultOptions'] ?? [],
+                    $entry['options']
+                ),
             ])
             ->values()
             ->all();

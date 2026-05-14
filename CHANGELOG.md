@@ -8,6 +8,10 @@ Twee niveaus:
 
 ## [Unreleased]
 
+### Gewijzigd
+- **Frontpage-logos vervangen**: ING-logo gewisseld van SVG naar PNG en Codex-logo van JPG naar WebP voor scherpere weergave in de "Compatibel met"-sectie. (Publiek)
+- **Standaard dashboard-layout**: een verse gebruiker ziet voortaan een geherordende layout met bredere welkomstbalk en rekeningen-overzicht (span 2), top-merchants en laatste transacties beperkt tot 3 items, en `Inkomsten vs uitgaven` plus `Categorie-uitgaven` standaard verborgen (in te schakelen via "Aanpassen"). Bestaande opgeslagen layouts worden niet aangepast. (Publiek + technisch)
+
 ---
 
 ## [2.0.0] - 2026-05-10
