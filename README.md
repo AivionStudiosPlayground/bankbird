@@ -1,16 +1,17 @@
 # BankBird
 
-Persoonlijke financiële administratie — importeer je ING bankafschriften (PDF), categoriseer transacties en houd je uitgaven bij. Ontworpen voor lokaal gebruik op je eigen computer.
+Persoonlijke financiële administratie voor op je eigen computer of server. Importeer bankafschriften (PDF of CSV), laat AI je transacties categoriseren en krijg helder inzicht in je uitgaven. Geen abonnement, geen cloud-account, geen reclame.
 
 ## Functies
 
-- PDF-import van ING bankafschriften
-- Automatische koppeling van transacties aan merchants via patroonherkenning
-- Categorieën met drill-down rapporten
-- Optionele AI-categorisatie via Claude of OpenAI (opt-in, API-sleutel vereist)
-- Multi-user met per-gebruiker data-isolatie
-- Twee-factor authenticatie (TOTP)
-- IBANs versleuteld opgeslagen
+- **Bankafschriften importeren** — PDF of CSV van ING, SNS en Knab. Rabobank en ABN AMRO volgen later.
+- **AI-categorisatie** (opt-in) — Claude of OpenAI categoriseert transacties razendsnel; gebruikt jouw eigen API-sleutel
+- **Slimme merchant-herkenning** — leert welke winkels bij welke categorie horen via pattern-matching
+- **Rapporten** — maandoverzichten, jaaroverzichten en drill-down per categorie
+- **Recurring-detectie** — vaste lasten en abonnementen worden automatisch herkend
+- **2FA via TOTP** — extra beveiligingslaag voor de admin
+- **IBANs versleuteld opgeslagen** — encrypted-at-rest via Laravel's `encrypted` cast
+- **Backup-export** — eigen backup-module om je data lokaal te exporteren
 
 ## Installatie
 
@@ -85,7 +86,7 @@ composer run dev
 
 Open dan `http://127.0.0.1:8000/admin`. Let op: deze server moet je elke keer handmatig starten.
 
-> **Vereisten zonder Herd:** PHP 8.4, Composer, Node.js 20+. PHP 8.5 wordt nog niet ondersteund (wachten op Laravel 12).
+> **Vereisten zonder Herd:** PHP 8.4, Composer 2+, Node.js 20+. PHP 8.5 wordt nog niet ondersteund.
 
 ## Configuratie
 
@@ -99,7 +100,7 @@ Alle instellingen zijn beschikbaar via het **Instellingen**-menu in de UI, waaro
 
 ## Online gebruik
 
-BankBird werkt standaard met SQLite (lokaal, geen server nodig). Voor online/multi-user gebruik:
+BankBird werkt standaard met SQLite (lokaal, geen server nodig). Wil je 'm op een eigen server draaien:
 
 1. Zet in `.env` de MySQL-verbinding aan (zie commentaar in `.env.example`)
 2. Zorg dat je databaseserver TLS en encryptie at-rest ingeschakeld heeft
