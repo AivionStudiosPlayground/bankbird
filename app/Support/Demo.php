@@ -17,21 +17,6 @@ class Demo
         return self::isLocalCombined() && self::pathStartsWith('demo');
     }
 
-    public static function isMarketingSite(): bool
-    {
-        if (app()->runningInConsole() && ! app()->runningUnitTests()) {
-            return false;
-        }
-
-        if (request()->getHost() === config('app.home_host', 'bankbird.app')) {
-            return true;
-        }
-
-        return self::isLocalCombined()
-            && ! self::pathStartsWith('demo')
-            && ! self::pathStartsWith('dev');
-    }
-
     public static function isLocalCombined(): bool
     {
         if (app()->runningInConsole() && ! app()->runningUnitTests()) {
@@ -49,29 +34,14 @@ class Demo
             return self::active() ? 'demo' : 'dev';
         }
 
-        // Marketing-host serveert publieke pagina's op `/`, dus het admin-paneel
-        // staat daar onder `/admin` om botsingen te voorkomen. Op alle andere
-        // hosts (productie demo-host, dev-host en self-hosted installaties)
-        // bestaat geen publieke marketing-site en draait het admin-paneel
-        // direct op de root.
-        if (self::isMarketingSite()) {
-            return 'admin';
-        }
-
         return '';
     }
 
     /**
      * Bouwt een URL binnen het admin-paneel die rekening houdt met de actieve
      * panel-path. Gebruik dit overal in plaats van een hardcoded `/admin/...`
-     * zodat self-hosted installaties (panel op root) en marketing-host (panel
-     * op `/admin`) allebei werken.
-     *
-     * Voorbeeld: `Demo::panelUrl('updates')` →
-     * - `https://bankbird.app/admin/updates` (marketing)
-     * - `https://demo.bankbird.app/updates` (demo)
-     * - `https://bankbird.test/updates` (self-hosted)
-     * - `https://bankbird.app.test/dev/updates` (lokaal combined)
+     * zodat self-hosted installaties (panel op root) en lokale combined-host
+     * (panel op `/demo` of `/dev`) allebei werken.
      */
     public static function panelUrl(string $path = ''): string
     {

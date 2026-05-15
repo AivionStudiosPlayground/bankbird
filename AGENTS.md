@@ -310,11 +310,10 @@ php artisan migrate --force
 
 ```bash
 php artisan config:cache
+php artisan route:cache
 php artisan view:cache
 php artisan event:cache
 ```
-
-**Do not run `route:cache`** — `routes/web.php` registers marketing-routes conditionally on the request host (`Demo::isMarketingSite()`). Caching at compile-time would omit them.
 
 ### 6. Smoke test
 
