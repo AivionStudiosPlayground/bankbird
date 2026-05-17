@@ -6,6 +6,7 @@ use App\Filament\Resources\MerchantResource;
 use App\Services\MerchantPatternService;
 use App\Support\Demo;
 use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 
@@ -16,6 +17,8 @@ class ListMerchants extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            CreateAction::make()->icon('heroicon-o-plus'),
+
             Action::make('sync_all')
                 ->label('Alles synchroniseren')
                 ->icon('heroicon-o-arrow-path')

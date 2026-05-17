@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\TransactionType;
 use App\Filament\Concerns\RestrictsInDemoMode;
+use App\Filament\Concerns\WithCompactGlobalSearch;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -11,6 +12,7 @@ use App\Services\AiCategorizationService;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -28,6 +30,7 @@ use Illuminate\Database\Eloquent\Collection;
 class TransactionResource extends Resource
 {
     use RestrictsInDemoMode;
+    use WithCompactGlobalSearch;
 
     protected static ?string $model = Transaction::class;
 
@@ -241,7 +244,9 @@ class TransactionResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->whereNull('category_id'))
                     ->toggle(),
             ])
+            ->recordUrl(fn (Transaction $record): string => Pages\ViewTransaction::getUrl(['record' => $record]))
             ->actions([
+                ViewAction::make()->icon('heroicon-o-eye'),
                 EditAction::make()->icon('heroicon-o-pencil'),
             ])
             ->bulkActions([
@@ -307,7 +312,13 @@ class TransactionResource extends Resource
     {
         return [
             'index' => Pages\ListTransactions::route('/'),
+            'view' => Pages\ViewTransaction::route('/{record}'),
             'edit' => Pages\EditTransaction::route('/{record}/edit'),
         ];
+    }
+
+    public static function globalSearchSeeMoreUrl(string $search): string
+    {
+        return Pages\ListTransactions::getUrl().'?search='.rawurlencode($search);
     }
 }

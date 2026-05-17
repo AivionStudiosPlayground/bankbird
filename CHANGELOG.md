@@ -8,9 +8,30 @@ Twee niveaus:
 
 ## [Unreleased]
 
+---
+
+## [2.1.0] - 2026-05-17
+
+Kwaliteits-release met focus op beheer-gemak: handmatige merchants, een fors uitgebreide categorie-set, een nieuwe transactie-detailpagina en een compactere globale zoekfunctie met "alle resultaten"-link.
+
+### Toegevoegd
+- **Handmatig merchants toevoegen** via `/merchants/create`. Naast automatische aanmaak bij import kun je nu zelf een merchant invoeren, een logo koppelen via URL of een eigen logo uploaden naar lokale storage (`storage/app/public/merchants`). (Publiek)
+- **Transactie-detailpagina** op `/transactions/{id}` met overzichtelijke read-only weergave van datum, bedrag, omschrijving, rekening, tegenrekening, merchant en categorie. Bewerken blijft beschikbaar via de prominente "Bewerken"-knop bovenaan. Een klik op een rij in de transactielijst opent voortaan de detailpagina in plaats van direct het bewerkscherm. (Publiek)
+- **Uitgebreidere categorie-bibliotheek**: 16 nieuwe standaard-categorieën worden bij verse installaties gezaaid (o.a. Sport & Fitness, Vakantie, Cadeaus & Donaties, Onderwijs, Kinderen, Belastingen, Bankkosten, Verzekeringen, Zakelijk) plus sub-categorieën onder Boodschappen, Restaurant/Eten, Transport, Wonen, Abonnementen en Inkomen. Een eenmalige migratie voegt de nieuwe categorieën automatisch toe aan bestaande installaties, zonder bestaande data te raken. (Publiek + technisch)
+- **Bredere icoonkeuze voor categorieën**: het icoon-keuzemenu is uitgebreid van 14 naar ~45 heroicons, gegroepeerd per thema (Boodschappen, Wonen, Vervoer, Communicatie, Gezondheid, Werk, Entertainment, Persoonlijk, Financieel) en doorzoekbaar. (Publiek)
+
 ### Gewijzigd
+- **Compactere globale zoekfunctie** voor transacties en merchants. De dropdown toont maximaal 5 resultaten per type; bij meer matches verschijnt een "Alle X resultaten bekijken"-link die de transactie- of merchant-lijst opent met de zoekquery al ingevuld. Klik op een transactie-resultaat opent de nieuwe detailpagina in plaats van het bewerkscherm. (Publiek)
 - **Frontpage-logos vervangen**: ING-logo gewisseld van SVG naar PNG en Codex-logo van JPG naar WebP voor scherpere weergave in de "Compatibel met"-sectie. (Publiek)
 - **Standaard dashboard-layout**: een verse gebruiker ziet voortaan een geherordende layout met bredere welkomstbalk en rekeningen-overzicht (span 2), top-merchants en laatste transacties beperkt tot 3 items, en `Inkomsten vs uitgaven` plus `Categorie-uitgaven` standaard verborgen (in te schakelen via "Aanpassen"). Bestaande layouts worden via een eenmalige migratie gereset, zodat ook lopende installaties direct de nieuwe default zien. (Publiek + technisch)
+
+### Opgelost
+- **Plus-knop in importflow**: tijdens een import kon de "nieuwe rekening"-knop in de geanalyseerde-bestanden tabel geen modal openen omdat de bijbehorende `createAccountAction()` ontbrak op de Livewire-page. De actie is alsnog gedefinieerd; aangemaakte rekening wordt direct gekoppeld aan het corresponderende analyzed bestand. (Publiek)
+
+### Technisch
+- Nieuwe trait `App\Filament\Concerns\WithCompactGlobalSearch` levert een herbruikbare implementatie voor "top N + alle resultaten" global-search; resources implementeren `globalSearchSeeMoreUrl()` om de doorklik-URL te leveren.
+- `CategorySeeder::sync()` is idempotent en wordt zowel vanuit de seeder als vanuit migratie `2026_05_17_120000_seed_extra_default_categories` aangeroepen, zodat één bron van waarheid bestaat voor de default-categorieën.
+- `MerchantResource::resolveLogoSource()` mapt een upload op `storage/`-relatief pad zodat het `logo_url`-accessor op het Merchant-model het pad correct resolveert naar een absolute URL voor `ImageColumn`.
 
 ---
 

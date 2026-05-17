@@ -3,23 +3,17 @@
 namespace App\Filament\Resources\MerchantResource\Pages;
 
 use App\Filament\Resources\MerchantResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\CreateRecord;
 
-class EditMerchant extends EditRecord
+class CreateMerchant extends CreateRecord
 {
     protected static string $resource = MerchantResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [DeleteAction::make()->icon('heroicon-o-trash')];
-    }
 
     /**
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
         return MerchantResource::resolveLogoSource($data);
     }

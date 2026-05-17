@@ -3,11 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsInDemoMode;
+use App\Filament\Concerns\WithCompactGlobalSearch;
 use App\Filament\Resources\MerchantResource\Pages;
 use App\Models\Merchant;
 use App\Services\MerchantPatternService;
 use App\Support\Demo;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -21,6 +23,7 @@ use Filament\Tables\Table;
 class MerchantResource extends Resource
 {
     use RestrictsInDemoMode;
+    use WithCompactGlobalSearch;
 
     protected static ?string $model = Merchant::class;
 
@@ -94,11 +97,20 @@ class MerchantResource extends Resource
 
             TextInput::make('logo_url')
                 ->label('Logo URL')
-                ->url()
                 ->maxLength(500)
                 ->nullable()
                 ->placeholder('https://logo.clearbit.com/example.com')
-                ->helperText('Automatisch ingevuld via php artisan merchants:fetch-logos'),
+                ->helperText('Externe URL of relatief pad. Wordt overschreven door een upload hieronder.'),
+
+            FileUpload::make('logo_upload')
+                ->label('Logo uploaden')
+                ->image()
+                ->disk('public')
+                ->directory('merchants')
+                ->maxSize(2048)
+                ->imagePreviewHeight('80')
+                ->dehydrated(false)
+                ->helperText('Optioneel — upload een eigen logo (PNG, JPG, SVG, max 2 MB). Heeft voorrang op de URL hierboven.'),
 
             TagsInput::make('match_patterns')
                 ->label('Matchpatronen')
@@ -175,7 +187,7 @@ class MerchantResource extends Resource
             ])
             ->emptyStateIcon('heroicon-o-building-storefront')
             ->emptyStateHeading('Nog geen merchants')
-            ->emptyStateDescription('Merchants worden automatisch aangemaakt bij het importeren van afschriften.')
+            ->emptyStateDescription('Merchants worden automatisch aangemaakt bij het importeren van afschriften, of voeg er handmatig één toe.')
             ->defaultSort('name');
     }
 
@@ -183,7 +195,36 @@ class MerchantResource extends Resource
     {
         return [
             'index' => Pages\ListMerchants::route('/'),
+            'create' => Pages\CreateMerchant::route('/create'),
             'edit' => Pages\EditMerchant::route('/{record}/edit'),
         ];
+    }
+
+    public static function globalSearchSeeMoreUrl(string $search): string
+    {
+        return Pages\ListMerchants::getUrl().'?search='.rawurlencode($search);
+    }
+
+    /**
+     * Wanneer een logo-upload is gedaan, gebruik dat pad als logo_url.
+     * Anders blijft de handmatig ingevulde URL behouden.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    public static function resolveLogoSource(array $data): array
+    {
+        $upload = $data['logo_upload'] ?? null;
+        unset($data['logo_upload']);
+
+        if (is_array($upload)) {
+            $upload = reset($upload) ?: null;
+        }
+
+        if (is_string($upload) && $upload !== '') {
+            $data['logo_url'] = 'storage/'.ltrim($upload, '/');
+        }
+
+        return $data;
     }
 }

@@ -79,22 +79,8 @@ class CategoryResource extends Resource
 
             Select::make('icon')
                 ->label('Icoon')
-                ->options([
-                    'shopping-cart' => 'Winkelwagen',
-                    'fire' => 'Vuur',
-                    'truck' => 'Vrachtwagen',
-                    'home' => 'Huis',
-                    'device-phone-mobile' => 'Telefoon',
-                    'scissors' => 'Schaar',
-                    'heart' => 'Hart',
-                    'musical-note' => 'Muziek',
-                    'arrow-trending-up' => 'Groei',
-                    'archive-box' => 'Archief',
-                    'ellipsis-horizontal' => 'Overig',
-                    'tag' => 'Label',
-                    'banknotes' => 'Bankbiljetten',
-                    'building-storefront' => 'Winkel',
-                ])
+                ->options(self::iconOptions())
+                ->searchable()
                 ->default('tag'),
 
             ColorPicker::make('color')
@@ -142,6 +128,87 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
+        ];
+    }
+
+    /**
+     * Beschikbare heroicon-opties voor categorieën, gegroepeerd per thema voor
+     * snel scannen in een lange dropdown. De keys zijn de heroicon-namen
+     * zonder prefix (rendering gebeurt elders met "heroicon-o-").
+     *
+     * @return array<string, array<string, string>>
+     */
+    public static function iconOptions(): array
+    {
+        return [
+            'Boodschappen & eten' => [
+                'shopping-cart' => 'Winkelwagen',
+                'shopping-bag' => 'Boodschappentas',
+                'building-storefront' => 'Winkel',
+                'fire' => 'Vuur',
+                'cake' => 'Taart',
+                'beaker' => 'Drank',
+            ],
+            'Wonen' => [
+                'home' => 'Huis',
+                'home-modern' => 'Modern huis',
+                'key' => 'Sleutel',
+                'wrench-screwdriver' => 'Onderhoud',
+                'bolt' => 'Bliksem / energie',
+                'sun' => 'Zon',
+            ],
+            'Vervoer' => [
+                'truck' => 'Vrachtwagen',
+                'map-pin' => 'Locatie',
+                'map' => 'Kaart',
+                'paper-airplane' => 'Vliegtuig',
+                'globe-europe-africa' => 'Wereldbol',
+            ],
+            'Communicatie & digitaal' => [
+                'device-phone-mobile' => 'Telefoon',
+                'device-tablet' => 'Tablet',
+                'computer-desktop' => 'Computer',
+                'wifi' => 'Wifi',
+                'signal' => 'Signaal',
+            ],
+            'Gezondheid & sport' => [
+                'heart' => 'Hart',
+                'plus-circle' => 'Plus (zorg)',
+                'trophy' => 'Trofee',
+            ],
+            'Werk & onderwijs' => [
+                'briefcase' => 'Aktetas',
+                'academic-cap' => 'Onderwijs',
+                'book-open' => 'Boek',
+                'pencil' => 'Potlood',
+            ],
+            'Entertainment' => [
+                'musical-note' => 'Muziek',
+                'film' => 'Film',
+                'video-camera' => 'Camera',
+                'puzzle-piece' => 'Puzzel',
+            ],
+            'Persoonlijk' => [
+                'scissors' => 'Schaar',
+                'sparkles' => 'Sparkles',
+                'gift' => 'Cadeau',
+                'face-smile' => 'Smiley',
+                'user-group' => 'Personen',
+            ],
+            'Financieel' => [
+                'banknotes' => 'Bankbiljetten',
+                'credit-card' => 'Creditcard',
+                'currency-euro' => 'Euro',
+                'building-library' => 'Bank',
+                'archive-box' => 'Spaarpot',
+                'arrow-trending-up' => 'Groei',
+                'arrow-trending-down' => 'Daling',
+                'calculator' => 'Calculator',
+            ],
+            'Diversen' => [
+                'tag' => 'Label',
+                'ellipsis-horizontal' => 'Overig',
+            ],
         ];
     }
 }

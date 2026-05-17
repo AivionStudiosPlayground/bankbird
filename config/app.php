@@ -144,9 +144,9 @@ return [
     | op GitHub (vX.Y.Z), hier zonder prefix.
     */
 
-    'version' => '2.0.0',
+    'version' => '2.1.0',
 
-    'release_date' => '2026-05-10',
+    'release_date' => '2026-05-17',
 
     'github_repo' => 'AivionStudiosPlayground/bankbird',
 
