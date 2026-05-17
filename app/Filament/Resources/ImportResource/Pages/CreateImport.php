@@ -2,10 +2,16 @@
 
 namespace App\Filament\Resources\ImportResource\Pages;
 
+use App\Enums\AccountType;
 use App\Filament\Resources\ImportResource;
 use App\Models\Account;
 use App\Services\PdfImportService;
+use Filament\Actions\Action;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -78,6 +84,65 @@ class CreateImport extends Page implements HasForms
         }
 
         return true;
+    }
+
+    public function createAccountAction(): Action
+    {
+        return Action::make('createAccount')
+            ->label('Nieuwe rekening')
+            ->modalHeading('Nieuwe rekening aanmaken')
+            ->modalSubmitActionLabel('Aanmaken')
+            ->modalWidth('md')
+            ->schema([
+                TextInput::make('name')
+                    ->label('Naam')
+                    ->required()
+                    ->maxLength(100),
+
+                Select::make('type')
+                    ->label('Type')
+                    ->options(AccountType::class)
+                    ->required(),
+
+                TextInput::make('iban')
+                    ->label('IBAN / Rekeningnummer')
+                    ->maxLength(34),
+
+                ColorPicker::make('color')
+                    ->label('Kleur')
+                    ->default('#6366f1'),
+
+                Select::make('icon')
+                    ->label('Icoon')
+                    ->options([
+                        'banknotes' => 'Bankbiljetten',
+                        'credit-card' => 'Creditcard',
+                        'building-library' => 'Bank',
+                        'wallet' => 'Portemonnee',
+                        'currency-euro' => 'Euro',
+                        'arrow-trending-up' => 'Groei',
+                        'home' => 'Huis',
+                    ])
+                    ->default('banknotes'),
+
+                Toggle::make('is_active')
+                    ->label('Actief')
+                    ->default(true),
+            ])
+            ->action(function (array $arguments, array $data): void {
+                $account = Account::create($data);
+                $index = $arguments['index'] ?? null;
+
+                if ($index !== null && array_key_exists($index, $this->persistedFiles)) {
+                    $this->persistedFiles[$index]['account_id'] = $account->id;
+                }
+
+                Notification::make()
+                    ->success()
+                    ->title('Rekening aangemaakt')
+                    ->body("{$account->name} is geselecteerd voor deze import.")
+                    ->send();
+            });
     }
 
     public function analyze(): void
